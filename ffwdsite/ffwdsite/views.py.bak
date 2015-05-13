@@ -1,0 +1,90 @@
+#coding=utf8
+from django.http import HttpResponse,Http404
+from django.template.loader import get_template
+from django.shortcuts import render_to_response
+from mydb.models import Blog_user,Blog_essay,Blog_tag
+from django.template import RequestContext
+from django.db.models import Q
+from redis import Redis
+import time
+#all dict 
+def costom(request):
+    import random,os
+    index_img=random.choice(os.listdir('/usr/html/static/img/index/'))
+    index_list=[('0','学习'),('1','工具'),('2','生活'),('3','标签'),('4','监控'),('5','论坛'),('6','关于')]
+    #online
+    if 'HTTP_X_REAL_IP' in request.META:
+        ip=request.META['HTTP_X_REAL_IP']
+    else:
+        ip=request.META['REMOTE_ADDR']
+    r=Redis(host='localhost',port=6379,db=10)
+    r.setex('IP:'+ip,request.user,60*5)
+    online_ips=len(r.keys('IP*'))
+    #all public variables
+    return {'list1':index_list,'center_img':index_img,'url':"http://www.feifeiwd.com", 
+            'META':request.META,'SESSION':request.session,'online_ips':online_ips,'User':request.user}
+
+#views
+def Test(request):
+    request.session['foo']='213'
+    del request.session['foo']
+    response= render_to_response('test.html',RequestContext(request,{'cookies':request.COOKIES},processors=[costom]))
+    response.set_cookie("fav","ccccccc")
+    return response
+    #return render_to_response('test.html',RequestContext(request,{'cookies':request.COOKIES},processors=[costom]))
+
+def Index(request):
+    return render_to_response('index.html',RequestContext(request,processors=[costom]))
+#----------------------- cp content0.html select0.html ,del left ------------
+def content_if(request,titles_id,t_id,html=('select0.html','content0.html')):
+    if t_id=='999':
+        return '',html[0]
+    else:
+        essay_id=Blog_essay.objects.get(id=t_id)
+        #online 
+        if 'HTTP_X_REAL_IP' in request.META:
+            ip=request.META['HTTP_X_REAL_IP']
+        else:
+            ip=request.META['REMOTE_ADDR']
+        r11=Redis(host='localhost',port=6379,db=11)
+        #ip不在redis对应的t_id命名集合key中(是不是今天第一次访问文章)
+        if ip not in r11.smembers('essay'+t_id):
+            r11.sadd('essay'+t_id,ip)
+            #过期时间 现在离今天23点59分59秒还有多少秒，为过期时间
+            extime=time.mktime(time.strptime(time.strftime('%Y%m%d')+' 23:59:59','%Y%m%d %X'))-time.time()
+            r11.expire('essay'+t_id,int(extime))
+            #t_id文章浏览量+1，保存到mysql
+            essay_id.page_view+=1
+            essay_id.save()
+        return essay_id,html[1]
+def Content(request,type,t_id):
+    #学习
+    if type=="0":
+        titles_id=Blog_essay.objects.filter(~Q(tag_id=4)&~Q(tag_id=3)).order_by('-createtime')
+        title_top='学习笔记'
+        content,go_html=content_if(request,titles_id,t_id)
+    #工具
+    elif type=="1":
+        titles_id=Blog_essay.objects.filter(tag=4).order_by('-createtime')
+        title_top='工具'
+        content,go_html=content_if(request,titles_id,t_id)
+    #生活
+    elif type=="2":
+        titles_id=Blog_essay.objects.filter(tag=3).order_by('-createtime')
+        title_top='生活'
+        content,go_html=content_if(request,titles_id,t_id)
+    #标签
+    elif type=="3":
+        titles_id=[]
+        for tag in Blog_tag.objects.all():
+            titles_id.append((tag,Blog_essay.objects.filter(tag_id=tag.id)))
+        title_top='标签'
+        content,go_html=content_if(request,titles_id,t_id,html=('select3.html','content3.html'))
+    #关于
+    elif type=="6" and t_id=='999':
+        return render_to_response('about.html',RequestContext(request,processors=[costom]))
+    else:
+        raise Http404
+    return render_to_response(go_html,RequestContext(request,{'type_id':type,'title_top':title_top,'content':content,'titles':titles_id},processors=[costom]))
+    
+

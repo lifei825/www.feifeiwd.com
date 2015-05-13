@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+{% block jquery %}
+<script src="{{url}}/static/jquery/jquery-1.11.2.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    {% for essay_tag,essay_title in titles %}
+        $(".click1_{{essay_tag.id}}").click(function(){
+            $(".submenu{{essay_tag.id}}").toggle();
+            });
+    {% endfor %}
+
+
+});
+</script>
+{% endblock%}
+
+{% block center %}
+    <div class="title_top"><h1>{{title_top}}</h1></div>
+    
+    <div class="title_list">
+    <ul>
+    {% for essay_tag,essay_title in titles %}
+        <li><a href="#" class="click1_{{essay_tag.id}}" ><h3 style="float:left" >{{essay_tag.tag_name}} </h3>({{essay_title|length}})</a>
+        <ul style="display: none;" class="submenu{{essay_tag.id}}">
+        {% for tag_titles in essay_title %}
+            <li style="line-height:40px;background-color:#B0E0E6;" ><a href="{{url}}/content/{{type_id}}/{{tag_titles.id}}"><h4>{{tag_titles.title}}</h4></a></li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+    </ul>
+    </div>
+{% endblock %}

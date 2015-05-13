@@ -1,0 +1,58 @@
+<html>
+<head>
+</head>
+
+<body>
+<p> test:{{META.HTTP_X_REAL_IP}}
+<p> user:{{User}}
+
+
+<!-- test registed -->
+<script>
+    function openLogin(){
+    document.getElementById("win").style.display="";
+    document.getElementById("back").style.display="";
+    }
+    function openRegist(){
+    document.getElementById("winre").style.display="";
+    document.getElementById("back").style.display="";
+    }
+
+    function closeLogin(){
+    document.getElementById("win").style.display="none";
+    document.getElementById("back").style.display="none";
+    }
+    function closeRegist(){
+    document.getElementById("winre").style.display="none";
+    document.getElementById("back").style.display="none";
+    }
+</script>
+
+<div id=back style="display:none; POSITION:absolute; left:0; top:0; width:100%; height:100%; background-color:#DCDCDC; filter:alpha(opacity=50);-moz-opacity:0.8;opacity: 0.8;"></div>
+<div id=win style="display:none; POSITION:absolute; left:50%; top:50%; width:600px; height:400px; margin-left:-300px; margin-top:-200px; border:1px solid #888; background-color:#edf; text-align:center">这是DIV登录框示例<br><a href="javascript:closeLogin();">关闭登录框</a>
+    <tr><th><label for="id_username">用户名:</label></th><td><input id="id_username" maxlength="30" name="username" type="text" /></td></tr>
+    <tr><th><label for="id_passwd1">密码:</label></th><td><input id="id_passwd1" name="passwd1" type="password" /></td></tr>
+    <tr><th><label for="id_passwd2">密码:</label></th><td><input id="id_passwd2" name="passwd2" type="password" /></td></tr>
+    <tr><th><label for="id_email">邮箱:</label></th><td><input id="id_email" name="email" type="email" /></td></tr>
+</div>
+
+<div id=winre style="display:none; POSITION:absolute; left:50%; top:50%; width:600px; height:400px; margin-left:-300px; margin-top:-200px; border:1px solid #888; background-color:#edf; text-align:center">这是DIV注册框示例<br><a href="javascript:closeRegist();">关闭注册框</a>
+    <form action="" method="post">
+        {% csrf_token %}    
+        <table>
+        {{form}}
+        </table>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+    {% if User.is_authenticated and User.is_active %}
+        <p>Hello.{{User}}!
+        <input type="button" value="登出"  onclick="window.location.href='http://feifeiwd.com/logout'" />
+    {% else %}
+        <input type="button" value="登录"  onclick="openLogin()" />
+        <input type="button" value="注册"  onclick="openRegist()" />
+    {% endif %}
+</body>
+<html>
+

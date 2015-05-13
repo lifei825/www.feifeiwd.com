@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script type="text/javascript" src="static/jquery/jquery-1.11.2.js"></script>
+<link rel="stylesheet" href="/static/css/index.css" type="text/css" />
+<style type="text/css">
+    div {background-color:#2F4F4F;}
+    div#right{width:8%;height:100%;float:left;border-left:1px solid #00FA9A;abackground-color:#ADD8E6;}
+    div#center{width:24.5%;height:100%;float:left;border-left:1px solid #00FA9A;background-color:#87CEEB;}
+    div#left{width:67%;height:100%;float:left;border-left:1px solid #00FA9A}
+    html,body {height:99%;margin:0px;}
+    .ind a img{text-align:center;float:center;}
+    div#clear {clear:both;}
+    h2{margin:15px; font-size: 25px;padding: 25px;color: white;}
+    .top div{width:1275;background-color:#8FBC8F;}
+    .top div  h1{font-size:50px;text-decoration: underline;afloat:center;text-align:center;margin-top:30px;font-family: 黑体, 宋体(GB)}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){ 
+    $("#select1").click(function(){
+    $("#center").load("/test","#center",function(){});
+    });
+});
+</script>
+<title>Pythoner</title>
+</head>
+
+<body>
+    <div id="left" >
+        {% block left %}
+            <div class="top">
+                <div class="title" style="height:100px;width:80%;float:left;margin-right:auto;">
+                    <h1>欢迎来到 Fly’Li 的个人博客 </h1>
+                </div>
+                <div class="tq" style="height:100px;width:20%;float:left;margin-right:auto;">
+                    <iframe allowtransparency="true"  frameborder="0" width="255" height="98" scrolling="no" 
+                    src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=1&t=1&v=0&d=1&bd=0&k=&f=ff8080&q=1&e=1&a=1&c=54511&w=255&h=98&align=right">
+                    </iframe>
+                </div>
+            </div>
+                <br />
+            <div class="sy" style="clear:both;">
+                <h2>网站架构图</h2>
+                <img style="width:60%;height:60%"  src="static/img/blog/webjg.jpg" >
+                <h3 style="margin:22px;padding:22px;left:1000px;" >先这样吧，再慢慢改...</h3>
+            </div>
+        {% endblock %}
+    </div>
+    
+    <div id="center" >
+    {% block center %}
+        <img style="width:100%;height:40%"  src="static/img/index/{{center_img}}" >
+        <h2>写着玩...</h2>
+        <h2>之前一直做运维，2014年12月份辞职开始找python相关的工作，很难找、面试都问有没有项目经验、个人博客，
+        于是2015年1月份开始写这个网站提高自己也希望对求职有所帮助...
+        界面缩小格式就乱了，前端从零开始对于我很复杂，没用模板，都是一点点手写的...
+        慢慢研究改进吧
+        </h2>
+    {% endblock %}
+    </div> 
+    
+    <div id="right" >
+        <div class="ind">
+            <br />
+            <a class="inda" href="/"><img src="static/portrait_img/111.jpg" height="60" width="60" alt="首页"></a>
+            <br /><br />
+            <ul class="ulli">
+                {% for item,idd in list1 %}
+                    <li ><a id="{{idd}}" ahref="no" target="_blank">{{ item }}</a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div> 
+    
+    <div id="clear"></div>
+
+</body>
+
+</html>

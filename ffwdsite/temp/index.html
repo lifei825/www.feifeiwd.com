@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% load mytags %}
+<html>
+<head>
+<script type="text/javascript" src="http://www.feifeiwd.com/static/jquery/jquery-1.11.2.js"></script>
+<meta name="baidu-site-verification" content="RA1O7L01fc" />
+<Meta name="Keywords" Content="python,django,linux,mysql,javascript,jquery">
+<meta property="wb:webmaster" content="4950cc0451605ed9" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<link rel="stylesheet" href="{{url}}/static/css/index.css" type="text/css" />
+<link rel="shortcut icon" href="/favicon.ico" />
+{% block jquery %}{% endblock%}
+<style type="text/css">
+    div {amargin:auto;abackground-color:#f5f5f5;}
+    div#alldiv{position:absolute;width:100%;height:99.7%;background-color:#FAEBD7;border-bottom:1px solid #708090}
+    div#right{width:7%;height:99.5%;float:left;border-left:1px solid #00FA9A;background-color:#2F4F4F;}
+    div#center{overflow:auto;width:24.6%;height:99.5%;float:left;border-left:1px solid #00FA9A;background-color:#FFEFD5;}
+    div#left{overflow:auto;width:68%;height:99.5%;float:left;border-left:1px solid #00FA9A;background-color:#F5F5DC;}
+    h2{margin:10px; font-size: 25px;padding: 15px;color:white;}
+    .djangonew p a:link {color:black;text-decoration:none}
+    .djangonew p a:visited {color:black;text-decoration:none}
+    .djangonew p a:active {color:black;text-decoration:none}
+</style>
+<title>{% block title %}Pythoner{% endblock %}</title>
+</head>
+
+<body>
+<div id="alldiv">
+
+    <div id="left" >
+        {% block left %}
+            <!-- 首页 标题区域-->
+            <div class="top" style="overflow:hidden;">
+                <div class="title" style="width:23%;float:left;amargin-right:auto;">
+                    <!-- 背景音乐--><embed astyle="height:20px;width:20px" src="{{url}}/static/mp3/WhatAreWords.mp3" hidden="false" autostart="true" loop="true">
+                </div>
+                <div class="title" style="width:60%;float:left;amargin-right:auto;">
+                    <h3>欢迎来到 Fly’Li 的博客 </h3>
+                </div>
+                <div class="tq" style="overflow:hidden;width:17%;float:left;background-color:#008B8B">
+                    <iframe allowtransparency="true" frameborder="0" width="195" height="77" scrolling="no" 
+                    src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=1&t=0&v=0&d=1&bd=0&k=&f=ff8080&q=1&e=1&a=1&c=54511&w=195&h=77&align=left">
+                    </iframe>            
+
+                </div>
+            </div>
+            <!-- 首页 内容区域-->
+            <div class="sy" style="abackground-image:url(/static/img/yang.jpg);overflow:auto;margin:5px;apadding:5px;clear:both;">
+                <!-- djang 最新咨询-->    
+                <div class="djangonew" style="overflow:auto;aborder:1px solid red;height:10%;width:49%;float:left;">
+                    <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Django 最新动态</h4>
+                    {% for title,curl,date in djangonews %}
+                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a href="{{curl}}" target="_blank">{{title}}</a>  
+                    <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
+                    {% endfor %}
+                </div>
+                <!-- Python 最新咨询-->    
+                <div class="djangonew" style="overflow:auto;float:right;aborder:1px solid red;height:10%;width:49%;">
+                <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Python最新动态</h4>
+                    {% for title,curl,date in pythonnews %}
+                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a href="{{curl}}" target="_blank">{{title}}</a>  
+                    <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
+                    {% endfor %}
+                </div>
+                <!-- 2层 -->
+                <div style="clear:both"></div>
+                <hr style="margin:20px 30px 20px 30px;border:2px double #dcdcdc">
+                <div class="web" style="overflow:auto;aborder:1px solid red;height:50%;width:49%;float:left;">
+                <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">微博最新动态</h4>
+                <iframe id="wbzb" width="100%" height="600"  frameborder="0" scrolling="no" src="http://widget.weibo.com/livestream/listlive.php?language=zh_cn&width=0&height=600&uid=1909438915&skin=2&refer=1&appkey=2368450693&pic=0&titlebar=1&border=1&publish=0&atalk=1&recomm=0&at=0&atopic=linux~%E6%BC%8F%E6%B4%9E~python~javascript&colordiy=0&dpc=1"></iframe>
+                </div>
+                <!-- Tornado 最新咨询-->    
+                <div class="djangonew" style="overflow:auto;float:right;aborder:1px solid red;height:10%;width:49%;">
+                <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Tornado最新动态</h4>
+                    {% for title,curl,date in tornadonews %}
+                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a href="{{curl}}" target="_blank">{{title}}</a>  
+                    <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
+                    {% endfor %}
+                <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">前端最新动态</h4>
+                </div>
+                <div style="clear:both;"><br /><br /></div>
+            </div>
+        {% endblock %}
+    </div>
+    
+    <div id="center" >
+    {% block center %}
+        <img style="width:100%;height:40%"  src="{{url}}/static/img/index/{{center_img}}" >
+        <div class="lizhi" style="overflow:auto;width:100%;height:60%;background-color:#87CEEB;">
+        <h2>励志微语</h2>
+        <h2>{{inspires}}</h2>
+        </div>
+    {% endblock %}
+    </div> 
+    
+    <div id="right" >
+        <div class="ind">
+            <br />
+            <a class="inda" href="/"><img src="{{url}}/static/portrait_img/111.jpg" height="60" width="60" alt="首页"></a>
+            <br /><br />
+            <ul class="ulli">
+                {% for idd,item in list1 %}
+                    <!--li ><a id="select{{idd}}" href="http://www.feifeiwd.com/select/{{idd}}" atarget="_blank">{{ item }}</a-->
+                    <li ><a id="select{{idd}}" href="{{url}}/content/{{idd}}/999/" atarget="_blank">{{ item }}</a>
+                {% endfor %}
+            </ul>
+        </div>
+            <!-- 访问状态 -->
+            <div style="clear:both"></div>
+            <div class="online" style="text-align:center;position:relative;bottom:-100px;margin:0px 0px 0px 15px;font-size:12px;color:#7CFC00;text-align:left;">
+                <p>在线人数：{{online_ips}}<p>
+                <p>今日访问：{{today_ips}}
+            </div>
+    </div>
+    
+
+    <!-- JiaThis Button BEGIN -->
+    <script type="text/javascript">
+        var jiathis_config = {data_track_clickback:'true'};
+    </script>
+    <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jiathis_r.js?btn=r3.gif&amp;uid=2005901" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+        <!-- 360-->
+        <div style="right:5px;position:absolute;bottom:5px;text-align:center">
+        <a href="http://webscan.360.cn/index/checkwebsite/url/www.feifeiwd.com"><img border="0" width="65" height="30" src="http://img.webscan.360.cn/status/pai/hash/3f50b8512df869ce8f8c26ec49a68628"/></a>
+        </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+{% extends "index.html" %}
+{% load mytags %}
+
+{% block title %}{{content.title}}{% endblock %}
+
+{% block left %}
+     <div class="top_content">
+         <h1>{{content.title}}</h1>{{content.createtime|date:"Y-m-d H:i:s"}}&nbsp阅读（{{content.page_view}}）
+    </div>
+     
+     <div class="content">
+     <pre>{{content.content|code|safe}}</pre>
+
+     <!-- UY BEGIN -->
+     <hr style="margin-top:100px;margin-bottom:100px" >
+     <div id="uyan_frame"></div>
+     <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2005901"></script>
+     <!-- UY END -->
+     </div>
+
+{% endblock %}
+
+
+
+{% block center %}
+    <div class="title_top"><h1>{{title_top}}</h1></div>
+    <div class="title_list">
+    <ul>
+    {% for essay_title in titles %}
+        <li><a href="{{url}}/content/{{type_id}}/{{essay_title.id}}"><h3>{{essay_title.title}}</h3></a>
+    {% endfor %}
+    </ul>
+    </div>
+{% endblock %}

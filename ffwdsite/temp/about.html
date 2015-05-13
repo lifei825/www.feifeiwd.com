@@ -1,0 +1,83 @@
+{% extends "index.html" %}
+{% load mytags %}
+
+{% block jquery %}
+<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+{% endblock%}
+
+{% block left %}
+     <div class="top_content">
+        <h1>About Me</h1>{{content.createtime|date:"Y-m-d H:i:s"}} 
+    </div>
+     
+     <div class="content">
+     <pre>
+        大家好我是屌丝，2015年打算做python方向的web开发.如有什么问题意见请<a style="right:100px" href="mailto:747553934@qq.com">MAIL</a>谢谢！
+
+        2015年2月25日 我已经成一个虚名的python web开发工程师，现在一直再努力成为一名 名副其实!专业的python开发工程师！
+
+     </pre>
+     
+     {{ '<br />'|cp:3|safe}}
+     <hr>
+     <pre>
+        建了一个python交流群:433156651，有兴趣的一起加入交流经验 互相帮助 共同进步
+     </pre>
+     
+     <h2 style="color:black" >网站架构图</h2>
+     <p>本网站前端没有用架构，都是自己一点点手打出来的，意在边学边用积累扎实的前端功底。
+     <img style="width:60%;height:60%"  src="{{url}}/static/img/blog/webjg.jpg" >
+    </div>
+
+    <script>
+        $(function() {
+            $.datepicker.regional["zh-CN"] = { closeText: "关闭", prevText: "&#x3c;上月", nextText: "下月&#x3e;", currentText: "今天", 
+                                               monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"], 
+                                               monthNamesShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"], 
+                                               dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"], 
+                                               dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"], 
+                                               dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"], 
+                                               weekHeader: "周", dateFormat: "yy-mm-dd", firstDay: 1, isRTL: !1, showMonthAfterYear: !0, yearSuffix: "年" }
+                                               $.datepicker.setDefaults($.datepicker.regional["zh-CN"]);
+$( "#datepicker" ).datepicker();
+//$(function() {
+//$( "#datepicker" ).datepicker();
+//$( "#anim" ).change(function() {
+//$( "#datepicker" ).datepicker( "option", "showAnim", $( this ).val() );
+//});
+});
+
+/*$(function(){
+    $('#tj').click(function() {
+    //$('#datepicker').toggle();
+    //$('#datepicker').css('display','none');
+    //alert("date:" + $("#datepicker").val());
+    //alert("date:" + $("#datepicker").text());
+});
+});*/
+</script>
+
+
+<p>日期：<input type="text" id="datepicker" size="30"></p>
+<button type="text" id="tj" size="30">提交</button>
+
+<p>动画：<br>
+<select id="anim">
+<option value="show">Show (默认)</option>
+<option value="slideDown">滑下</option>
+<option value="fadeIn">淡入</option>
+<option value="blind">Blind (UI 百叶窗特效)</option>
+<option value="bounce">Bounce (UI 反弹特效)</option>
+<option value="clip">Clip (UI 剪辑特效)</option>
+<option value="drop">Drop (UI 降落特效)</option>
+<option value="fold">Fold (UI 折叠特效)</option>
+<option value="slide">Slide (UI 滑动特效)</option>
+<option value="">无</option>
+</select>
+</p>
+{{ '<p><br \>'|cp:30|safe}}
+
+
+{% endblock %}
+

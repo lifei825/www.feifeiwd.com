@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+
+{% block jquery %}
+    <script src="{{url}}/static/jquery/jquery-1.11.2.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        {% for essay_tag,essay_title in titles %}
+            $(".click1_{{essay_tag.id}}").click(function(){
+                $(".submenu{{essay_tag.id}}").toggle();
+            });
+        {% endfor %}
+    
+    });
+    </script>
+
+    <style type="text/css">
+        .dj1{background-color:#FFDAB9}
+    </style>
+    <script type="text/javascript">
+        function chg(obj){
+            if(obj.className!="dj1"){
+                obj.oldClass=obj.className;
+                obj.className="dj1";
+            }else if(obj.oldClass){
+                obj.className=obj.oldClass;}
+        }
+    </script>
+
+{% endblock%}
+
+{% block center %}
+    {% ifequal type_id '3' %}
+        <div class="title_top"><h1>{{title_top}}</h1></div>
+        <div class="title_list">
+        <ul>
+        {% for essay_tag,essay_title in titles %}
+            <li><a href="#" class="click1_{{essay_tag.id}}" onclick="javascript:chg(this);"><h3 style="float:left" >{{essay_tag.tag_name}}</h3>({{essay_title|length}})</a>
+            <ul style="display: none;" class="submenu{{essay_tag.id}}">
+            {% for tag_titles in essay_title %}
+                <li style="line-height:40px;background-color:#B0E0E6;" ><a href="{{url}}/content/{{type_id}}/{{tag_titles.id}}">&nbsp{{tag_titles.title}}</a></li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+        </ul>
+        </div>
+    {% else %}    
+        <div class="title_top"><h1>{{title_top}}</h1></div>
+        <div class="title_list">
+        <ul>
+        {% for essay_title in titles %}
+            <li><a href="{{url}}/content/{{type_id}}/{{essay_title.id}}">&nbsp{{essay_title.title}}</a>
+        {% endfor %}
+        </ul>
+        </div>
+    {% endifequal %}
+{% endblock %}

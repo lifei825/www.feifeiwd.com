@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+
+<head>
+<TITLE>pythoner</TITLE>
+</head>
+
+<frameset frameborder=0 border=0 framespacing="0" cols="10%,25%,75%">
+    <frame frameborder=0 bordercolor="#CADAE8" noresize="noresize" src="/static/temp/frame_a.html">
+    <frame frameborder=1 bordercolor="#CADAE8" noresize="noresize" src="/static/temp/frame_b.html">
+    <frame frameborder=1 bordercolor="#CADAE8" noresize="noresize" src="/static/temp/frame_c.html">
+</frameset>
+
+
+
+</html>

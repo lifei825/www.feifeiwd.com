@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script type="text/javascript" src="static/jquery/jquery-1.11.2.js"></script>
+<link rel="stylesheet" href="/static/css/index.css" type="text/css" />
+<style type="text/css">
+    div {font-size:.85em;background-color:#2F4F4F;}
+    div#left{width:8%;height:100%;float:left;border-right:1px solid #00FA9A}
+    div#center{width:auto;height:100%;float:center;border-left:1px solid #00FA9A}
+    div#right{width:67%;height:100%;float:right;border-left:1px solid #00FA9A}
+    html,body {height:99%;amargin:0px;}
+</style>
+<title>Pythoner</title>
+</head>
+
+<body>
+    <div id="left" >
+        <div class="ind">
+            <br />
+            <a class="inda" href="/"><img src="static/portrait_img/111.jpg" height="60" width="60" alt="首页"></a>
+            <br /><br />
+            <ul class="ulli">
+                {% for item in list1 %}
+                    <li><a href="/test" target="_blank">{{ item }}</a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div> 
+
+    <div id="right" >
+        <div id="tq" style="float:right;margin-left:auto;">
+        <iframe allowtransparency="true" frameborder="0" width="255" height="98" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=1&t=1&v=0&d=1&bd=0&k=&f=ff8080&q=1&e=1&a=1&c=54511&w=255&h=98&align=right"></iframe>
+        </div>
+    </div>
+    
+
+    <div id="center" >
+    {% block center %}
+        <img style="clear:both;position:absolute;margin:0px;height:auto;width:25%;"  src="static/img/index/{{center_img}}">
+    {% endblock %}
+    </div> 
+
+</body>
+
+</html>

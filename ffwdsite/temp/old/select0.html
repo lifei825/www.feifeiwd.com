@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+
+
+
+
+{% block center %}
+    <div class="title_top"><h1>{{title_top}}</h1></div>
+    <div class="title_list">
+    <ul>
+    {% for essay_title in titles %}
+        <li><a href="{{url}}/content/{{type_id}}/{{essay_title.id}}"><h3>{{essay_title.title}}</h3></a>
+    {% endfor %}
+    </ul>
+    </div>
+{% endblock %}

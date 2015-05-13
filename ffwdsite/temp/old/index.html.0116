@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<!-- script type="text/javascript" src="http://123.57.64.174/static/jquery/jquery-1.11.2.js"></script -->
+<link rel="stylesheet" href="http://123.57.64.174/static/css/index.css" type="text/css" />
+<style type="text/css">
+    div {margin:auto;abackground-color:#f5f5f5;}
+    div#alldiv{position:absolute;width:100%;height:99.7%;background-color:#FAEBD7;border-bottom:1px solid #708090}
+    div#right{width:7%;height:99.5%;float:left;border-left:1px solid #00FA9A;background-color:#2F4F4F;}
+    div#center{overflow:auto;width:24.6%;height:99.5%;float:left;border-left:1px solid #00FA9A;background-color:#87CEEB;}
+    div#left{overflow:auto;width:68%;height:99.5%;float:left;border-left:1px solid #00FA9A;background-color:#F5F5DC;}
+    h2{margin:10px; font-size: 25px;padding: 15px;color: white;}
+</style>
+<script type="text/javascript"></script>
+<title>Pythoner</title>
+</head>
+
+<body>
+<div id="alldiv">
+
+    <div id="left" >
+        {% block left %}
+            <div class="top">
+                <div class="title" style="width:80%;float:left;margin-right:auto;">
+                    <h1>欢迎来到 Fly’Li 的博客 </h1>
+                </div>
+                <div class="tq" style="width:20%;float:left;margin-right:auto;background-color:#008B8B;">
+                    <iframe allowtransparency="true"  frameborder="0" width="255" height="98" scrolling="no" 
+                    src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=1&t=1&v=0&d=1&bd=0&k=&f=ff8080&q=1&e=1&a=1&c=54511&w=255&h=98&align=right">
+                    </iframe>
+                </div>
+            </div>
+                <br />
+            <div class="sy" style="margin:20px;padding:20px;clear:both;">
+                <h2 style="color:black" >网站架构图</h2>
+                <img style="width:60%;height:60%"  src="http://123.57.64.174/static/img/blog/webjg.jpg" >
+                <h3 style="left:1000px;" >先这样吧，再慢慢改...</h3>
+            </div>
+        {% endblock %}
+    </div>
+    
+    <div id="center" >
+    {% block center %}
+        <img style="width:100%;height:40%"  src="http://123.57.64.174/static/img/index/{{center_img}}" >
+        <h2>写着玩...</h2>
+        <h2>之前一直做运维，2014年12月份辞职开始找python相关的工作，面试都问有没有项目经验、个人博客，
+        于是2015年1月份开始写这个网站希望提高自己的技能。界面缩小格式就乱了，前端从零开始对于我很复杂，没用模板，都是一点点手写的...
+        慢慢研究改进吧
+        </h2>
+    {% endblock %}
+    </div> 
+    
+    <div id="right" >
+        <div class="ind">
+            <br />
+            <a class="inda" href="/"><img src="http://123.57.64.174/static/portrait_img/111.jpg" height="60" width="60" alt="首页"></a>
+            <br /><br />
+            <ul class="ulli">
+                {% for idd,item in list1 %}
+                    <li ><a id="select{{idd}}" href="http://123.57.64.174/select/{{idd}}" atarget="_blank">{{ item }}</a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div> 
+    
+</div>
+</body>
+
+</html>

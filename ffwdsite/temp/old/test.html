@@ -1,0 +1,26 @@
+<html>
+<head>
+<script type="text/javascript" src="static/jquery/jquery-1.11.2.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#des").click(function(){ 
+    $("#test").load("/",'#test',function(){});
+    });
+    $("#tt").click(function(){ 
+    $("#des").load("/adminstrator",'#des',function(){});
+    });
+});
+</script>
+</head>
+
+<body>
+<div id='test' style="width:500px;height:600px"> test</div>
+<h1 id='tt'> aaaa</h1>
+<br \>
+<br \>
+<br \>
+<br \>
+<div id="des" style="width:500px;height:600px"> aaaaa</div>
+
+</body>
+</html>

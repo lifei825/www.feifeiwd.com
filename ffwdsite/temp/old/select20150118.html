@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+{% block jquery %}
+<script src="http://123.57.64.174/static/jquery/jquery-1.11.2.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    jQuery.jq51menu = function(menuboxid,submenu){
+
+        var menuboxli = $(menuboxid+" li");
+        menuboxli.eq(0).find(submenu).hide();
+        menuboxli.click( function () {
+            $(this).addClass("thismenu").find(submenu).show().end().siblings("li").removeClass("thismenu").find(submenu).hide();
+             return false;
+              });
+
+    };
+
+    $.jq51menu("div.title_list","ul.submenu");
+
+});
+</script>
+{% endblock%}
+
+{% block center %}
+    <div class="title_top"><h1>{{title_top}}</h1></div>
+    
+    <div id="ttitle_list" class="title_list">
+    <ul>
+    {% for essay_tag,essay_title in titles %}
+        <li><a href="#"><h3>{{essay_tag.tag_name}}</h3></a>
+        <ul  class="submenu">
+        {% for tag_titles in essay_title %}
+            <li><a style="background-color:#DCDCDC;" href="{{url}}/content/{{type_id}}/{{tag_titles.id}}"><h3>{{tag_titles.title}}</h3></a>
+        {% endfor %}
+        </ul>
+        </li>
+    {% endfor %}
+    </ul>
+    </div>
+{% endblock %}

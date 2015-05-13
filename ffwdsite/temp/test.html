@@ -1,0 +1,155 @@
+<html>
+<head>
+{% load mytags %}
+</head>
+
+<body>
+<p> aaaaaaaaaaaaaaaaaaaaaaaaaaa
+<table style="border:5px;border-color:red;color:blue;">
+    {% for key,value in cookies.items %}
+        <tr>
+            <th>{{key}}</th><td>{{value}}</td>
+        <tr>
+    {% endfor %}
+</table>
+
+<hr>
+
+<table bordercolor='red' border="1" cellspacing="0" cellpadding="2" style="aborder:1;aborder-color:red;color:blue;">
+        <tr>
+            <th>a aa </th><td>1</td>
+        <tr>
+        <tr>
+            <th>a</th><td>122</td>
+        <tr>
+        <tr>
+            <th>a</th><td>13333333</td>
+        <tr>
+</table>
+<p> test:{{META.HTTP_X_REAL_IP}}
+<p> user:{{User}}
+<p> refer:{{refer}}
+<a href="http://www.feifeiwd.com/visit/">访问状态</a>
+
+<table bordercolor='red' border="1" cellspacing="0" cellpadding="2" style="aborder:1;aborder-color:red;acolor:blue;">
+
+{% for x,y in META.items %}
+<tr>
+    <th> {{x}} </th><td>&nbsp{{y}} </td>
+</tr>
+{% endfor%}
+</table>
+
+<table bordercolor='red' border="1" cellspacing="0" cellpadding="2" style="aborder:1;aborder-color:red;acolor:blue;">
+
+{% for x,y in SESSION.items %}
+<tr>
+    <th> {{x}} </th><td>&nbsp{{y}} </td>
+</tr>
+{% endfor%}
+</table>
+
+<!-- test registed -->
+<link rel="stylesheet" href="{{url}}/static/css/register.css" type="text/css" />
+<script type="text/javascript" src="http://www.feifeiwd.com/static/js/register.js"></script>
+<!-- 弹窗时锁背景-->
+<div id="back" style="display:none"></div>
+<!-- 这是DIV登录框示例 -->
+<div id="win" style="display:none;">
+    <div style="background:#00BFFF;margin-bottom:25px">登录</div>
+    <form action="/login/" name=formslogin onsubmit="return check_form_login()" method="post" >
+        {% csrf_token %}
+        <table align="center" cellpadding="0" cellspacing="0">
+        {{form_login}}
+        </table>
+        <input type="submit" value="提交" style="margin:10px">
+        <input type="button" value="取消" onclick="closeLogin()">
+    </form>
+</div>
+<!-- 这是DIV注册框示例-->
+<div id="winre" style="display:none">
+    <div style="background:#00BFFF;margin-bottom:25px">注册</div>
+    <form action="/register/" name=forms onsubmit="return check_form()" method="post" >
+        {% csrf_token %}
+        <table align="center" cellpadding="0" cellspacing="0">
+        {{form}}
+        </table>
+        <input type="submit" value="提交" style="margin:10px">
+        <input type="button" value="取消" onclick="closeRegist()">
+    </form>
+</div>
+<!-- 判断是否登录状态 主评论框-->
+    <hr>
+    {% if User.is_authenticated and User.is_active %}
+        <p>Hello.{{User}}!
+        <input type="button" value="登出"  onclick="window.location.href='http://www.feifeiwd.com/logout/'" />
+        <form action="/comment/" method='post'>
+            {% csrf_token %}
+            <p><textarea name='message' rows="7" cols="35">请文明留言</textarea>
+            <input type='hidden' name='username' value={{User}}>
+            <input type='hidden' name='essayid' value='8'>
+            <!-- input type='hidden' name='essayid' value={{content.id}} -->
+            <input type="submit" value="发表">
+        </form>
+    {% else %}
+        评论请先
+        <input type="button" value="登录"  onclick="openLogin()" />
+        <input type="button" value="注册"  onclick="openRegist()" />
+    {% endif %}
+    <!-- 评论 -->
+    <div>
+        <div style="border-top:1px dotted #DCDCDC;margin-top:15px; abackground:red; color:blue; padding:0px;">
+            <p>最新评论
+        </div>
+        <hr style="height:5px;border:none;border-top:5px ridge red;">
+        {% for com,lzllist in testcomments %}
+        <!-- 楼中楼回复框 js-->
+        <script type="text/javascript">
+            function openComment{{com.id}}(){
+                if(document.getElementById("lzl{{com.id}}").style.display=='none'){
+                    document.getElementById("lzl{{com.id}}").style.display="";
+                }
+                else{
+                    document.getElementById("lzl{{com.id}}").style.display='none';
+                }
+            }
+        </script>
+            <!-- 各层主评论 -->
+            <div style="padding:5px;font-size:15px;border-bottom:1px dotted #DCDCDC;margin:10px">
+            <dl>
+                <dt style="margin:5px;border-bottom:1px solid black;color:#CD5C5C">
+                    <div style="float:left">{{forloop.counter}}楼：{{com.blog_user.user}} 发表于{{com.comtime|date:"Y-m-d f"}}</div>
+                    {% if User.is_authenticated and User.is_active %}
+                    <div style="float:right"><a href="#" onclick="openComment{{com.id}}();return false">回复</a></div>
+                    {% endif %}
+                    <div style="clear:both"></div>
+                </dt>
+                <dd><pre>{{com.comment}}</pre></dd>
+            </dl>
+                <!-- 隐藏的楼中楼回复框-->
+                <div id='lzl{{com.id}}' style="display:none">
+                    <form action="/comment/" method='post'>
+                    {% csrf_token %}
+                    <p><textarea name='message' rows="3" cols="30"></textarea>
+                    <input type='hidden' name='username' value={{User}}>
+                    <input type='hidden' name='essayid' value='8'>
+                    <!-- input type='hidden' name='essayid' value={{content.id}} -->
+                    <input type='hidden' name='comtype' value={{com.id}}>
+                    <input type="submit" value="回复">
+                    </form>
+                </div>
+                <!-- 楼中楼回复 html-->
+                {% for lzl in lzllist %}
+                <div style="padding:5px; line-height:25px;margin:5px 0px 20px 80px;display:inline;border-top:1px dotted #DCDCDC;">
+                    <span style="font-size:15px;color:#CD5C5C">{{lzl.blog_user.user}}</span> 
+                    <span style="font-size:5px;color:#CD5C5C">{{lzl.comtime|date:"Y-m-d f"}} : </span>
+                    <span style="background-color:#B0E0E6">{{lzl.comment}}</span>
+                </div><br />
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+<html>
+

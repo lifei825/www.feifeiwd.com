@@ -1,0 +1,51 @@
+{% extends "index.html" %}
+{% load mytags %}
+
+{% block jquery %}
+<script src="{{url}}/static/jquery/jquery-1.11.2.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    {% for essay_tag,essay_title in titles %}
+        $(".click1_{{essay_tag.id}}").click(function(){
+            $(".submenu{{essay_tag.id}}").toggle();
+        });
+    {% endfor %}
+});
+</script>
+{% endblock%}
+
+{% block title %}{{content.title}}{% endblock %}
+
+{% block left %}
+    <div class="top_content">
+        <h1>{{content.title}}</h1>{{content.createtime|date:"Y-m-d H:i:s"}}&nbsp阅读（{{content.page_view}}）
+    </div>
+      
+     <div class="content">
+        <pre>{{content.content|code|safe}}</pre>
+
+        <!-- UY BEGIN -->
+            <hr style="margin-top:100px;margin-bottom:100px" >
+            <div id="uyan_frame"></div>
+            <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2005901"></script>
+        <!-- UY END -->
+     </div>
+{% endblock %}
+
+
+{% block center %}
+    <div class="title_top"><h1>{{title_top}}</h1></div>
+    
+    <div class="title_list">
+        <ul>
+        {% for essay_tag,essay_title in titles %}
+            <li><a href="#" class="click1_{{essay_tag.id}}" ><h3 style="float:left" >{{essay_tag.tag_name}} </h3>({{essay_title|length}})</a>
+                <ul  style="display: none;" class="submenu{{essay_tag.id}}">
+                    {% for tag_titles in essay_title %}
+                        <li style="line-height:40px;background-color:#B0E0E6;"><a href="{{url}}/content/{{type_id}}/{{tag_titles.id}}"><h4>{{tag_titles.title}}</h4></a>
+                    {% endfor %}
+                </ul>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,177 @@
+{% extends "index.html" %}
+{% load mytags %}
+
+{% block jquery %}
+<!-- 点击后显示文章列表 -->
+    <script src="{{url}}/static/jquery/jquery-1.11.2.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        {% for essay_tag,essay_title in titles %}
+            $(".click1_{{essay_tag.id}}").click(function(){
+                $(".submenu{{essay_tag.id}}").toggle();
+            });
+        {% endfor %}
+    });
+    </script>
+
+<!-- 点击后变色 -->
+    <style type="text/css">
+    .dj1{background-color:#FFDAB9}
+    </style>
+    <script type="text/javascript">
+    function chg(obj){
+    if(obj.className!="dj1"){
+    obj.oldClass=obj.className;
+    obj.className="dj1";
+    }else if(obj.oldClass){
+    obj.className=obj.oldClass;}
+    }
+    </script>
+{% endblock%}
+
+{% block title %}{{content.title}}{% endblock %}
+
+{% block left %}
+    <div class="top_content">
+        <h1>{{content.title}}</h1>{{content.createtime|date:"Y-m-d H:i:s"}}&nbsp阅读（{{content.page_view}}）
+    </div>
+    <!-- 正文 -->
+     <div class="content">
+        <pre>{{content.content|code|safe}}</pre>
+            <hr style="margin-top:50px;margin-bottom:20px" >
+            <!-- 登录 注册  评论  -->
+                <link rel="stylesheet" href="{{url}}/static/css/register.css" type="text/css" />
+                <script type="text/javascript" src="http://www.feifeiwd.com/static/js/register.js"></script>
+                <!-- 弹窗时锁背景 默认隐藏-->
+                <div id="back" style="display:none"></div>
+                <!-- DIV登录框 默认隐藏-->
+                <div id="win" style="display:none;">
+                    <div style="background:#00BFFF;margin-bottom:25px">登录</div>
+                        <div style="padding-left:100px;text-align:center" >
+                    <form action="/login/" name=formslogin onsubmit="return check_form_login()" method="post">
+                        {% csrf_token %}
+                        <table align="center" cellpadding="0" cellspacing="10">
+                        {{form_login}}
+                        </table>
+                        <input type="submit" value="提交" style="margin:10px 10px 0 0">
+                        <input type="button" value="取消" style="margin:10px 120px 0 0" onclick="closeLogin()">
+                    </form>
+                        </div>
+                </div>
+                <!-- DIV注册框 默认隐藏 -->
+                <div id="winre" style="display:none;">
+                    <div style="background:#00BFFF;margin-bottom:25px">注册</div>
+                        <div style="padding-left:100px;text-align:center" >
+                    <form action="/register/" name=forms onsubmit="return check_form()" method="post" >
+                        {% csrf_token %}
+                        <table align="center" cellpadding="0" cellspacing="0">
+                        {{form}}
+                        </table>
+                        <input type="submit" value="提交" style="margin:10px 10px 0 0">
+                        <input type="button" value="取消" style="margin:10px 120px 0 0" onclick="closeRegist()">
+                    </form>
+                        </div>
+                </div>
+                <!-- 判断是否登录状态 主评论框-->
+                    {% if User.is_authenticated and User.is_active %}
+                        <p>Hello.{{User}}!
+                        <input type="button" value="登出"  onclick="window.location.href='http://www.feifeiwd.com/logout/'" />
+                        <form action="/comment/" method='post'>
+                            {% csrf_token %}
+                            <p><textarea name='message' rows="6" cols="35">请文明留言</textarea>
+                            <input type='hidden' name='username' value={{User}}>
+                            <!-- input type='hidden' name='essayid' value='8'-->
+                            <input type='hidden' name='essayid' value={{content.id}}>
+                            <input type="submit" value="发表">
+                        </form>
+                    {% else %}
+                        评论请先
+                        <input type="button" value="登录"  onclick="openLogin()" />
+                        <input type="button" value="注册"  onclick="openRegist()" />
+                    {% endif %}
+                    <!-- 评论 -->
+                    <div>
+                        <div style="border-top:1px dotted #DCDCDC;margin-top:15px; abackground:red; color:blue; padding:0px;">
+                            <p>最新评论
+                        </div><hr style="height:5px;border:none;border-top:5px ridge red;">
+                        {% for com,lzllist in testcomments %}
+                        <!-- 楼中楼回复框 js-->
+                        <script type="text/javascript">
+                            function openComment{{com.id}}(){
+                                if(document.getElementById("lzl{{com.id}}").style.display=='none'){
+                                    document.getElementById("lzl{{com.id}}").style.display="";
+                                }
+                                else{
+                                    document.getElementById("lzl{{com.id}}").style.display='none';
+                                }
+                            }
+                        </script>
+                            <!-- 各层主评论 -->
+                            <div style="padding:5px;font-size:15px;border-bottom:1px dotted #DCDCDC;margin:10px">
+                            <dl>
+                                <dt style="margin:5px;border-bottom:1px solid black;color:#CD5C5C">
+                                    <div style="float:left">{{forloop.counter}}楼：{{com.blog_user.user}} 发表于{{com.comtime|date:"Y-m-d f"}}</div>
+                                    {% if User.is_authenticated and User.is_active %}
+                                    <div style="float:right"><a href="#" onclick="openComment{{com.id}}();return false">回复</a></div>
+                                    {% endif %}
+                                    <div style="clear:both"></div>
+                                </dt>
+                                <dd><pre>{{com.comment}}</pre></dd>
+                            </dl>
+                                <!-- 隐藏的楼中楼回复框-->
+                                <div id='lzl{{com.id}}' style="display:none">
+                                    <form action="/comment/" method='post'>
+                                    {% csrf_token %}
+                                    <p><textarea name='message' rows="3" cols="30"></textarea>
+                                    <input type='hidden' name='username' value={{User}}>
+                                    <!-- input type='hidden' name='essayid' value='8'-->
+                                    <input type='hidden' name='essayid' value={{content.id}}>
+                                    <input type='hidden' name='comtype' value={{com.id}}>
+                                    <input type="submit" value="回复">
+                                    </form>
+                                </div>
+                                <!-- 楼中楼回复 html-->
+                                {% for lzl in lzllist %}
+                                <div style="padding:5px; line-height:25px;margin:5px 0px 20px 80px;display:inline;border-top:1px dotted #DCDCDC;">
+                                    <span style="font-size:11px;color:#1E90FF">{{lzl.blog_user.user}}</span> 
+                                    <span style="font-size:5px;color:#1E90FF">{{lzl.comtime|date:"Y-m-d f"}} : </span>
+                                    <span style="font-size:11px;background-color:#B0E0E6">{{lzl.comment}}</span>
+                                </div><br />
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+            <!-- 登录 注册  评论  END -->
+            {{"<br \>"|cp:10|safe}}
+     </div>
+{% endblock %}
+
+<!-- 中间 显示文章标题列表 -->
+{% block center %}
+    {% ifequal type_id '3' %}
+        <div class="title_top"><h1>{{title_top}}</h1></div>
+        <div class="title_list">
+            <ul>
+            {% for essay_tag,essay_title in titles %}
+                <li><a href="#" class="click1_{{essay_tag.id}}" onclick="chg(this);" ><h3 style="float:left" >{{essay_tag.tag_name}}</h3>({{essay_title|length}})</a>
+                    <ul  style="display: none;" class="submenu{{essay_tag.id}}">
+                        {% for tag_titles in essay_title %}
+                            <li style="line-height:40px;background-color:#B0E0E6;"><a href="{{url}}/content/{{type_id}}/{{tag_titles.id}}">&nbsp{{tag_titles.title}}</a>
+                        {% endfor %}
+                    </ul>
+            {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <div class="title_top"><h1>{{title_top}}</h1></div>
+        <div class="title_list">
+        <ul>
+        {% for essay_title in titles %}
+            <li><a href="{{url}}/content/{{type_id}}/{{essay_title.id}}">&nbsp{{essay_title.title}}</a>
+        {% endfor %}
+        </ul>
+        </div>
+    {% endifequal %}
+{% endblock %}
+
+

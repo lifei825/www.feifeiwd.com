@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>访问状态-Pythoner</title>
+    <style type="text/css">
+        div{width:75%;margin-left:auto; margin-right:auto}
+        
+        .online_ip table tr{border:1px solid red;text-align:center;color:#A52A2A}
+        .online_ip table tr th{color:black}
+        
+        .today_ip table tr{border:2px solid red;text-align:center;color:blue}
+        .today_ip table tr th{color:black}
+
+        .usercol{color:red}
+    </style>
+</head>
+
+<BODY style="background-color:#AFEEEE">
+    <div class="visit" >
+    <div class="online_ip" >
+        <h3>在线状态:{{online_ipall|length}}</h3>
+        <table border="2" cellspacing="0" cellpadding="6" bgcolor="#F5F5DC">
+            <tr><th>ipAddress</th><th>用户名</th></tr>
+            {% for ip,user in online_ipall %}
+            <tr><td>{{ip}}</td><td>{{user}}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+        
+        <hr>
+    <!-- 今日访问总量 -->
+    <div class="today_ip" >
+        <h3>今日访问:{{today_ipall|length}}</h3>
+        <table border="2" cellspacing="0" cellpadding="6" bgcolor="#FFF0F5">
+            <tr>
+                <th>序号</th>
+                <th>ipAddress</th>
+                <th>用户名</th>
+                <th>最后访问时间</th>
+                <th>链接来源</th>
+            </tr>
+            {% for ip,usertime in today_ipall %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{ip}}</td>
+                <td class={% ifnotequal usertime.0 'AnonymousUser' %}usercol{% endifnotequal %}>{{usertime.0}}</td>
+                <td>{{usertime.1}}</td>
+                <td>{% if usertime.2 %}{{usertime.2}}{% else %}NO REFERER{%endif%}</td>
+            </tr>    
+            {% endfor %}
+        </table>    
+    </div>
+    </div>
+
+</BODY>
+</html>
