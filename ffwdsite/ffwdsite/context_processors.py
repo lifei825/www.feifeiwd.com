@@ -13,32 +13,32 @@ def auston_proc(request):
         ip=request.META['HTTP_X_REAL_IP']
     else:
         ip=request.META['REMOTE_ADDR']
-    r10=Redis(host='localhost',port=6379,db=10)
+    r10=Redis(host='localhost',port=6379,db=10,password='ffwd')
     r10.setex('IP:'+ip,request.user,60*5)
     online_ips=len(r10.keys('IP*'))
     #励志
     inspires=Blog_inspire.objects.order_by('?')[0].inspire
     #DJANGO 新闻动态  redis: key list
-    r9=Redis(host='localhost',port=6379,db=9)
+    r9=Redis(host='localhost',port=6379,db=9,password='ffwd')
     titlecurldate=[]
     for i in sorted(r9.keys(),key=lambda x:r9.lindex(x,1),reverse=True):  #以时间排序
         titlecurldate.append((i,r9.lindex(i,0),r9.lindex(i,1)))
     #python 新闻动态  redis: key list
-    r8=Redis(host='localhost',port=6379,db=8)
+    r8=Redis(host='localhost',port=6379,db=8,password='ffwd')
     titlecurldate2=[]
     for i in sorted(r8.keys(),key=lambda x:r8.lindex(x,1),reverse=True):  #以时间排序
         titlecurldate2.append((i,r8.lindex(i,0),r8.lindex(i,1)))
     #tornado 新闻动态  redis: key list
-    r7=Redis(host='localhost',port=6379,db=7)
+    r7=Redis(host='localhost',port=6379,db=7,password='ffwd')
     titlecurldate3=[]
     for i in sorted(r7.keys(),key=lambda x:r7.lindex(x,1),reverse=True):  #以时间排序
         titlecurldate3.append((i,r7.lindex(i,0),r7.lindex(i,1)))
     #今日访问
-    r12=Redis(host='localhost',port=6379,db=12)
+    r12=Redis(host='localhost',port=6379,db=12,password='ffwd')
     now=time.strftime('%Y%m%d %T') 
     refer=request.META.get('HTTP_REFERER','No REFERER')
     r12.ltrim('IP:'+ip,start=10,end=1)  #写入前先清空列表防止叠加
-    r12.rpush('IP:'+ip,request.user,now,refer)
+    r12.rpush('IP:'+ip,request.user,now,refer)  #ip命名的列表分别写入 用户、时间、连接来源
     extime=time.mktime(time.strptime(time.strftime('%Y%m%d')+' 23:59:59','%Y%m%d %X'))-time.time()
     r12.expire('IP:'+ip,int(extime))
     today_ips=len(r12.keys('IP*'))

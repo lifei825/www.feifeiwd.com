@@ -39,7 +39,7 @@ def content_if(request,titles_id,t_id,html=('select.html','content.html')):
             ip=request.META['HTTP_X_REAL_IP']
         else:
             ip=request.META['REMOTE_ADDR']
-        r11=Redis(host='localhost',port=6379,db=11)
+        r11=Redis(host='localhost',port=6379,db=11,password='ffwd')
         #ip不在redis对应的t_id命名集合key中(是不是今天第一次访问文章)
         if ip not in r11.smembers('essay'+t_id):
             #redis: 新增或追加一个essayid的set key，并存入一个ip，ip重复则抵消
@@ -76,7 +76,7 @@ def Content(request,type,t_id):
         content,go_html=content_if(request,titles_id,t_id)
     #监控
     elif type=="4":
-        return HttpResponseRedirect('http://www.feifeiwd.com:8181/dashboard.php')
+        return HttpResponseRedirect('http://www.feifeiwd.com:8100')
         #return render_to_response('creating.html',RequestContext(request))
     #论坛
     elif type=="5":
@@ -96,8 +96,8 @@ def Content(request,type,t_id):
     
 #访问状态
 def Visit(request):
-    r10=Redis(host='localhost',port=6379,db=10)
-    r12=Redis(host='localhost',port=6379,db=12)
+    r10=Redis(host='localhost',port=6379,db=10,password='ffwd')
+    r12=Redis(host='localhost',port=6379,db=12,password='ffwd')
     #在线
     online_ipall=[]
     for i in r10.keys('IP*'):
