@@ -5,5 +5,5 @@
 *.egg-info
 dist
 build
-ffwdsite/uws.error 
+ffwdsite/uws.error
 ffwdsite/ffwdsite/settings.py
