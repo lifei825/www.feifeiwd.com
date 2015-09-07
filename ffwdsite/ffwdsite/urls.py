@@ -26,5 +26,7 @@ urlpatterns += patterns('ffwdsite.views',
     (r'^test$','Test'),
     (r'^content/(\d)/(\d+)/$','Content'), 
     (r'^visit/$','Visit'),
+    (r'^weibo/$','Weibo'),
+    (r'^api/click_url$','Click_url'),
 )
 

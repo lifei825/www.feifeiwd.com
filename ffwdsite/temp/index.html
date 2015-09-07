@@ -4,7 +4,9 @@
 <head>
 <script type="text/javascript" src="http://www.feifeiwd.com/static/jquery/jquery-1.11.2.js"></script>
 <meta name="baidu-site-verification" content="RA1O7L01fc" />
-<Meta name="Keywords" Content="python,django,linux,mysql,javascript,jquery">
+{% block keyword %}
+<meta name="Keywords" content="python,django,linux,mysql,javascript,jquery" />
+{% endblock %}
 <meta property="wb:webmaster" content="4950cc0451605ed9" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <link rel="stylesheet" href="{{url}}/static/css/index.css" type="text/css" />
@@ -50,7 +52,7 @@
                 <div class="djangonew" style="overflow:auto;aborder:1px solid red;height:10%;width:49%;float:left;">
                     <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Django 最新动态</h4>
                     {% for title,curl,date in djangonews %}
-                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a href="{{curl}}" target="_blank">{{title}}</a>  
+                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a onclick="save_url(this)" href="{{curl}}" target="_blank">{{title}}</a>  
                     <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
                     {% endfor %}
                 </div>
@@ -58,7 +60,7 @@
                 <div class="djangonew" style="overflow:auto;float:right;aborder:1px solid red;height:10%;width:49%;">
                 <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Python最新动态</h4>
                     {% for title,curl,date in pythonnews %}
-                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a href="{{curl}}" target="_blank">{{title}}</a>  
+                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a onclick="save_url(this)" href="{{curl}}" target="_blank">{{title}}</a>  
                     <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
                     {% endfor %}
                 </div>
@@ -73,12 +75,35 @@
                 <div class="djangonew" style="overflow:auto;float:right;aborder:1px solid red;height:10%;width:49%;">
                 <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Tornado最新动态</h4>
                     {% for title,curl,date in tornadonews %}
-                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a href="{{curl}}" target="_blank">{{title}}</a>  
+                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a onclick="save_url(this)" href="{{curl}}" target="_blank">{{title}}</a>  
                     <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
                     {% endfor %}
-                <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">前端最新动态</h4>
+                <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Flask最新动态</h4>
+                    {% for title,curl,date in flasknews %}
+                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a onclick="save_url(this)" href="{{curl}}" target="_blank">{{title}}</a>  
+                    <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
+                    {% endfor %}
                 </div>
-                <div style="clear:both;"><br /><br /></div>
+                <!-- 3层 -->
+                <div style="clear:both"></div>
+                <hr style="margin:20px 30px 20px 30px;border:2px double #dcdcdc">
+                <div class="djangonew" style="overflow:auto;aborder:1px solid red;height:10%;width:49%;float:left;">
+                    <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Javascript 最新动态</h4>
+                    {% for title,curl,date in jsnews %}
+                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a onclick="save_url(this)" href="{{curl}}" target="_blank">{{title}}</a>  
+                    <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
+                    {% endfor %}
+                </div>
+                <!-- HTML5 最新咨询-->    
+                <div class="djangonew" style="overflow:auto;float:right;aborder:1px solid red;height:10%;width:49%;">
+                <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Html5最新动态</h4>
+                    {% for title,curl,date in h5news %}
+                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a onclick="save_url(this)" href="{{curl}}" target="_blank">{{title}}</a>  
+                    <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
+                    {% endfor %}
+                </div>
+                
+		<div style="clear:both;"><br /><br /></div>
             </div>
         {% endblock %}
     </div>
@@ -125,6 +150,19 @@
         <a href="http://webscan.360.cn/index/checkwebsite/url/www.feifeiwd.com"><img border="0" width="65" height="30" src="http://img.webscan.360.cn/status/pai/hash/3f50b8512df869ce8f8c26ec49a68628"/></a>
         </div>
 </div>
+	
+    <script type="text/javascript">
+	$.ajaxSetup({
+   	 data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+	});
+	function save_url(t) {
+		var data = {
+                        IP:"{{IP}}",
+                        url: t.href,
+                };
+		$.post('/api/click_url', data);
+	}
+    </script>
 </body>
 
 </html>

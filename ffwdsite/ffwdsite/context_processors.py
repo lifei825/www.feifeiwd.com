@@ -3,6 +3,15 @@ import time
 from redis import Redis
 from mydb.models import Blog_inspire
 
+
+r9=Redis(host='localhost',port=6379,db=9,password='ffwd')
+def get_news(keyword):
+    titlecurldate=[]
+    for i in sorted(r9.lrange(keyword,start=0,end=-1),key=lambda x:eval(x)[2],reverse=True):  #以时间排序
+        titlecurldate.append(eval(i))
+    return titlecurldate[:16]
+
+
 def auston_proc(request):
     #主页随机图片
     import random,os
@@ -19,20 +28,15 @@ def auston_proc(request):
     #励志
     inspires=Blog_inspire.objects.order_by('?')[0].inspire
     #DJANGO 新闻动态  redis: key list
-    r9=Redis(host='localhost',port=6379,db=9,password='ffwd')
-    titlecurldate=[]
-    for i in sorted(r9.keys(),key=lambda x:r9.lindex(x,1),reverse=True):  #以时间排序
-        titlecurldate.append((i,r9.lindex(i,0),r9.lindex(i,1)))
+    django_news = get_news('Django')
     #python 新闻动态  redis: key list
-    r8=Redis(host='localhost',port=6379,db=8,password='ffwd')
-    titlecurldate2=[]
-    for i in sorted(r8.keys(),key=lambda x:r8.lindex(x,1),reverse=True):  #以时间排序
-        titlecurldate2.append((i,r8.lindex(i,0),r8.lindex(i,1)))
+    Python_news = get_news('Python')
     #tornado 新闻动态  redis: key list
-    r7=Redis(host='localhost',port=6379,db=7,password='ffwd')
-    titlecurldate3=[]
-    for i in sorted(r7.keys(),key=lambda x:r7.lindex(x,1),reverse=True):  #以时间排序
-        titlecurldate3.append((i,r7.lindex(i,0),r7.lindex(i,1)))
+    Tornado_news = get_news('Tornado')
+    Flask_news = get_news('Flask')
+    Js_news = get_news('Javascript')
+    H5_news = get_news('HTML5')
+    
     #今日访问
     r12=Redis(host='localhost',port=6379,db=12,password='ffwd')
     now=time.strftime('%Y%m%d %T') 
@@ -52,9 +56,15 @@ def auston_proc(request):
             'online_ips':online_ips,
             'User':request.user,
             'inspires':inspires,
-            'djangonews':titlecurldate[:16],
-            'pythonnews':titlecurldate2[:16],
-            'tornadonews':titlecurldate3[:16],
+            'djangonews':django_news,
+            'pythonnews':Python_news,
+            'tornadonews':Tornado_news,
+            'flasknews':Flask_news,
+            'jsnews':Js_news,
+            'h5news':H5_news,
             'today_ips':today_ips,
+	    'IP':ip,
             }
-
+if __name__ == '__main__':
+    django_news = get_news('Django')
+    print django_news

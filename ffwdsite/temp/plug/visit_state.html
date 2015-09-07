@@ -17,6 +17,18 @@
 
 <BODY style="background-color:#AFEEEE">
     <div class="visit" >
+    <!-- url click-->
+    <div class="online_ip" >
+        <h3>今日点击:{{curl_data|length}}</h3>
+        <table border="2" cellspacing="0" cellpadding="6" bgcolor="#F5F5DC">
+            <tr><th>ipAddress</th><th>url</th><th>date</th></tr>
+            {% for data in curl_data %}
+            <tr><td>{{data.ip}}</td><td>{{data.url}}</td><td>{{data.date}}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+        
+        <hr>
     <div class="online_ip" >
         <h3>在线状态:{{online_ipall|length}}</h3>
         <table border="2" cellspacing="0" cellpadding="6" bgcolor="#F5F5DC">

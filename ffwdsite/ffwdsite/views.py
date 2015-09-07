@@ -8,8 +8,12 @@ from django.db.models import Q
 from redis import Redis
 from ffwdsite.contact.forms import RegisterForm,LoginForm
 import time
+from weibo import APIClient
+from settings import db
+from django.contrib.auth.decorators import login_required
 
 #views
+@login_required(login_url="/")
 def Test(request):
     request.session['foo']='213'
     del request.session['foo']
@@ -27,7 +31,19 @@ def Test(request):
     #return render_to_response('test.html',RequestContext(request,{'cookies':request.COOKIES},processors=[costom]))
 #-------------------------------------------------------------------------------------
 def Index(request):
+    if request.GET.get("code", 0):
+        with open('/root/torken.txt', 'a') as f:
+            f.write(time.strftime("%Y%m%d %T")+"\t"+request.GET['code']+'\n')
     return render_to_response('index.html',RequestContext(request))
+#weibo
+def Weibo(request):
+        APP_KEY = '2368450693'
+       	APP_SECRET = 'f70dc4fc129118a0c08a1baaa1e0c02f'
+        CALLBACK_URL = 'http://feifeiwd.com'
+        client = APIClient(app_key=APP_KEY, app_secret=APP_SECRET, redirect_uri=CALLBACK_URL)
+        url = client.get_authorize_url()
+        return HttpResponseRedirect(url)
+        
 #----------------------- cp content0.html select0.html ,del left ------------
 def content_if(request,titles_id,t_id,html=('select.html','content.html')):
     if t_id=='999':
@@ -76,7 +92,7 @@ def Content(request,type,t_id):
         content,go_html=content_if(request,titles_id,t_id)
     #监控
     elif type=="4":
-        return HttpResponseRedirect('http://www.feifeiwd.com:8100')
+        return HttpResponseRedirect('http://devops.feifeiwd.com')
         #return render_to_response('creating.html',RequestContext(request))
     #论坛
     elif type=="5":
@@ -95,9 +111,17 @@ def Content(request,type,t_id):
     return render_to_response(go_html,{'testcomments':com_lzllist,'form_login':LoginForm,'form':RegisterForm,'type_id':type,'title_top':title_top,'content':content,'titles':titles_id},RequestContext(request))
     
 #访问状态
+@login_required(login_url="/")
 def Visit(request):
     r10=Redis(host='localhost',port=6379,db=10,password='ffwd')
     r12=Redis(host='localhost',port=6379,db=12,password='ffwd')
+    #mongo Click_url
+    today_sec = time.mktime(time.strptime(time.strftime("%Y%m%d"),"%Y%m%d"))
+    curl_data = db.curl.find({'date':{'$gte':today_sec}},{'_id':0})
+    curl_data = list(curl_data)
+    if len(curl_data):
+        for i in curl_data:
+            i['date'] = time.strftime("%Y%m%d %T",time.localtime(i['date']))
     #在线
     online_ipall=[]
     for i in r10.keys('IP*'):
@@ -107,6 +131,12 @@ def Visit(request):
     for i in r12.keys('IP*'):
         today_ipallwx.append((i,r12.lrange(i,start=0,end=-1)))
     today_ipall=sorted(today_ipallwx,key=lambda x:x[1][1],reverse=True)
-    return render_to_response('plug/visit_state.html',{"online_ipall":online_ipall,"today_ipall":today_ipall},RequestContext(request))
+    return render_to_response('plug/visit_state.html',{"curl_data":curl_data,"online_ipall":online_ipall,"today_ipall":today_ipall},RequestContext(request))
 
-
+#点击超链接统计
+def Click_url(request):
+	if request.method == 'POST':
+		url = request.POST.get('url')
+		IP = request.POST.get('IP')
+		db.curl.insert({'ip':IP, 'url':url, 'date':time.time()})
+	return HttpResponse("ok")
