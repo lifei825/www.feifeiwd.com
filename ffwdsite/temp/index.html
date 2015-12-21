@@ -15,7 +15,7 @@
 <style type="text/css">
     div {amargin:auto;abackground-color:#f5f5f5;}
     div#alldiv{position:absolute;width:100%;height:99.7%;background-color:#FAEBD7;border-bottom:1px solid #708090}
-    div#right{width:7%;height:99.5%;float:left;border-left:1px solid #00FA9A;background-color:#2F4F4F;}
+    div#right{width:7%;height:99.5%;float:left;border-left:1px solid #00FA9A;background-color:#2f4f4f;}
     div#center{overflow:auto;width:24.6%;height:99.5%;float:left;border-left:1px solid #00FA9A;background-color:#FFEFD5;}
     div#left{overflow:auto;width:68%;height:99.5%;float:left;border-left:1px solid #00FA9A;background-color:#F5F5DC;}
     h2{margin:10px; font-size: 25px;padding: 15px;color:white;}
@@ -103,6 +103,19 @@
                     {% endfor %}
                 </div>
                 
+                <!-- 4层 -->
+                <div style="clear:both"></div>
+                <hr style="margin:20px 30px 20px 30px;border:2px double #dcdcdc">
+                <div class="djangonew" style="overflow:auto;aborder:1px solid red;height:10%;width:49%;float:left;">
+                    <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Go 最新动态</h4>
+                    {% for title,curl,date in gonews %}
+                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a onclick="save_url(this)" href="{{curl}}" target="_blank">{{title}}</a>  
+                    <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
+                    {% endfor %}
+                </div>
+		
+
+
 		<div style="clear:both;"><br /><br /></div>
             </div>
         {% endblock %}
@@ -110,7 +123,7 @@
     
     <div id="center" >
     {% block center %}
-        <img style="width:100%;height:40%"  src="{{url}}/static/img/index/{{center_img}}" >
+        <img id="hz_pic" style="width:100%;height:40%"  src="{{url}}/static/img/index/{{center_img}}" >
         <div class="lizhi" style="overflow:auto;width:100%;height:60%;background-color:#87CEEB;">
         <h2>励志微语</h2>
         <h2>{{inspires}}</h2>
@@ -162,6 +175,14 @@
                 };
 		$.post('/api/click_url', data);
 	}
+    //循环执行， 每10s 执行一次图片更新
+    window.setInterval(ChangePicture, 10000);
+    function ChangePicture() {
+        $.get('/api/changePicture',
+            function(data){
+                $("#hz_pic").attr("src", "{{url}}/static/img/index/"+data);
+            });
+    }
     </script>
 </body>
 

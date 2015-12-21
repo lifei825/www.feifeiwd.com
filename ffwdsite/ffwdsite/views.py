@@ -11,8 +11,10 @@ import time
 from weibo import APIClient
 from settings import db
 from django.contrib.auth.decorators import login_required
+import json
 
-#views
+#view -l
+
 @login_required(login_url="/")
 def Test(request):
     request.session['foo']='213'
@@ -140,3 +142,13 @@ def Click_url(request):
 		IP = request.POST.get('IP')
 		db.curl.insert({'ip':IP, 'url':url, 'date':time.time()})
 	return HttpResponse("ok")
+
+#点赞
+def Click_praise(request):
+	if request.method == 'POST':
+		ID = request.POST.get('essayID')
+        	essay_id=Blog_essay.objects.get(id=ID)
+            	essay_id.praise+=1
+            	essay_id.save()
+	return HttpResponse(json.dumps({'praise':essay_id.praise}),content_type = 'application/json')
+		

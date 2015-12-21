@@ -36,6 +36,7 @@ def auston_proc(request):
     Flask_news = get_news('Flask')
     Js_news = get_news('Javascript')
     H5_news = get_news('HTML5')
+    Go_news = get_news('Go')
     
     #今日访问
     r12=Redis(host='localhost',port=6379,db=12,password='ffwd')
@@ -62,6 +63,7 @@ def auston_proc(request):
             'flasknews':Flask_news,
             'jsnews':Js_news,
             'h5news':H5_news,
+            'gonews':Go_news,
             'today_ips':today_ips,
 	    'IP':ip,
             }

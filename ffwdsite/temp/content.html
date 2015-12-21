@@ -31,6 +31,24 @@
     }else if(obj.oldClass){
     obj.className=obj.oldClass;}
     }
+//点赞
+    $.ajaxSetup({
+        data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+    });
+    function click_praise() {
+        var data = {
+                        essayID:"{{content.id}}"
+                };
+    {% if User.is_authenticated and User.is_active %}
+        $.post('/api/click_praise', data,
+		function (data){
+			$("#praise").html("&nbsp;赞("+data.praise+")")
+		}
+	);
+    {% else %}
+	openLogin();
+    {% endif %}
+    };
     </script>
 {% endblock%}
 
@@ -38,8 +56,9 @@
 
 {% block left %}
     <div class="top_content">
-        <h1>{{content.title}}</h1>{{content.createtime|date:"Y-m-d H:i:s"}}&nbsp阅读（{{content.page_view}}）
-	<span style="color:#A9A9A9;font-size:10px">标签:{{content.tag}}</span>
+        <h1>{{content.title}}</h1>{{content.createtime|date:"Y-m-d H:i:s"}}&nbsp;阅读({{content.page_view}})
+	<a id='praise' onclick="click_praise()" href="javascript:void(0);" style='color:#00ffff'>&nbsp;赞({{content.praise}})</a>
+	<span style="color:#A9A9A9;font-size:10px">&nbsp;标签:{{content.tag}}</span>
     </div>
     <!-- 正文 -->
      <div class="content">
