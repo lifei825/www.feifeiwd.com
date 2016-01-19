@@ -113,6 +113,14 @@
                     <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
                     {% endfor %}
                 </div>
+                <!-- djang 最新咨询-->    
+                <div class="djangonew" style="overflow:auto;aborder:1px solid red;height:10%;width:49%;float:right;">
+                    <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Django 最新动态</h4>
+                    {% for title,curl,date in djangonews %}
+                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a onclick="save_url(this)" href="{{curl}}" target="_blank">{{title}}</a>  
+                    <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
+                    {% endfor %}
+                </div>
 		
 
 
@@ -150,6 +158,21 @@
                 <p>今日访问：{{today_ips}}
             </div>
     </div>
+    <!-- 底部区域 >
+    <div style="clear:both"></div>
+    <div id="bottom"></div>
+    < 底部区域-END -->
+
+<script src="{{url}}/static/js/jsized.snow.min.js" type="text/javascript"></script>
+<script>
+    /**
+     * This function takes 2 arguments
+     * First is the path to the directory with snowflake images
+     * Second is the maximum number of snowflakes, please do not
+     * set this number above 60 as it will impact the performance
+     */
+    //createSnow('', 60);
+</script> 
     
 
     <!-- JiaThis Button BEGIN -->

@@ -1,0 +1,34 @@
+CTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div id="show_news">
+        <ul>
+        </ul>
+        <div id="more_news">
+            <a href="javascript:;">加载更多</a>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript">
+    var n = 1;
+    window.onload = function() {
+        var data = {
+            key: list+n
+        };
+        $.get('http://www.feifeiwd.com/api/get51news', data,
+            function(data){
+                for
+                $("#show_news ul").append()
+            }
+        );
+    };
+
+</script>
+</html>
+
