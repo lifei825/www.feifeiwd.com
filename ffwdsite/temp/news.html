@@ -1,11 +1,12 @@
-CTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="http://www.feifeiwd.com/static/css/index.css" type="text/css" />
     <meta charset="UTF-8">
     <title></title>
 </head>
 <body>
-    <div id="show_news">
+    <div id="show_news" style="overflow:auto;float:left;width: 49%;height: 50%;padding: 5px;">
         <ul>
         </ul>
         <div id="more_news">
@@ -14,20 +15,27 @@ CTYPE html>
     </div>
 </body>
 
-<script type="text/javascript" src="jquery.min.js"></script>
+<!--script type="text/javascript" src="jquery.min.js"></script-->
+<script type="text/javascript" src="http://www.feifeiwd.com/static/jquery/jquery-1.11.2.js"></script>
 <script type="text/javascript">
     var n = 1;
-    window.onload = function() {
+    var CTO_news = function(n) {
         var data = {
-            key: list+n
+            key: "list"+n
         };
         $.get('http://www.feifeiwd.com/api/get51news', data,
             function(data){
-                for
-                $("#show_news ul").append()
-            }
-        );
+                for(var i=0;i<data.length;i++) {
+                    $("#show_news ul").append(
+                            "<li><dic class='cto_pic'><a href=\""+data[i][1]+"\"><img src=\""+data[i][0]+"\"></a></dic>" +
+                            "<dic class='cto_info'><a target='_blank' href=\""+data[i][1]+"\">"+data[i][2]+"</a><p>"+
+                            data[i][3]+"</p><div class='cto_time'><i>"+data[i][4]+"</i></div></dic>"+
+                            '<div style="clear:both"></div></li>'
+                    )
+                }
+            });
     };
+    CTO_news(n)
 
 </script>
 </html>

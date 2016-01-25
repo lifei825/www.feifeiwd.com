@@ -48,13 +48,16 @@
             </div>
             <!-- 首页 内容区域-->
             <div class="sy" style="abackground-image:url(/static/img/yang.jpg);overflow:auto;margin:5px;apadding:5px;clear:both;">
-                <!-- djang 最新咨询-->    
+                <!-- 51cto 最新咨询-->
                 <div class="djangonew" style="overflow:auto;aborder:1px solid red;height:10%;width:49%;float:left;">
-                    <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Django 最新动态</h4>
-                    {% for title,curl,date in djangonews %}
-                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a onclick="save_url(this)" href="{{curl}}" target="_blank">{{title}}</a>  
-                    <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
-                    {% endfor %}
+                    <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">IT 最新动态</h4>
+                    <div id="show_news" style="overflow:scroll;padding: 5px;height: 600px">
+                        <ul>
+                        </ul>
+                        <div id="more_news">
+                            <a href="javascript:;">加载更多</a>
+                        </div>
+                    </div>
                 </div>
                 <!-- Python 最新咨询-->    
                 <div class="djangonew" style="overflow:auto;float:right;aborder:1px solid red;height:10%;width:49%;">
@@ -206,6 +209,27 @@
                 $("#hz_pic").attr("src", "{{url}}/static/img/index/"+data);
             });
     }
+
+    //51cto news
+    var n = 1;
+    var CTO_news = function(n) {
+        var data = {
+            key: "list"+n
+        };
+        $.get('http://www.feifeiwd.com/api/get51news', data,
+                function(data){
+                    for(var i=0;i<data.length;i++) {
+                        $("#show_news ul").append(
+                                "<li><dic class='cto_pic'><a href=\""+data[i][1]+"\"><img src=\""+data[i][0]+"\"></a></dic>" +
+                                "<dic class='cto_info'><a target='_blank' href=\""+data[i][1]+"\">"+data[i][2]+"</a><p>"+
+                                data[i][3]+"</p><div class='cto_time'><i>"+data[i][4]+"</i></div></dic>"+
+                                '<div style="clear:both"></div></li>'
+                        )
+                    }
+                });
+    };
+    CTO_news(n)
+
     </script>
 </body>
 
