@@ -2,7 +2,7 @@
 {% load mytags %}
 <html>
 <head>
-<script type="text/javascript" src="http://www.feifeiwd.com/static/jquery/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="{{url}}/static/jquery/jquery-1.11.2.js"></script>
 <meta name="baidu-site-verification" content="RA1O7L01fc" />
 {% block keyword %}
 <meta name="Keywords" content="python,django,linux,mysql,javascript,jquery" />
@@ -51,11 +51,10 @@
                 <!-- 51cto 最新咨询-->
                 <div class="djangonew" style="overflow:auto;aborder:1px solid red;height:10%;width:49%;float:left;">
                     <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">IT 最新动态</h4>
-                    <div id="show_news" style="overflow:scroll;padding: 5px;height: 600px">
-                        <ul>
-                        </ul>
-                        <div id="more_news">
-                            <a href="javascript:;">加载更多</a>
+                    <div id="show_news" style="overflow:scroll;padding: 5px;height: 620px;margin-top: 10px;background: #FFF7FB;">
+                        <ul></ul>
+                        <div id="show_more">
+                            <a href="javascript:;" onclick="more_news()">加载更多</a>
                         </div>
                     </div>
                 </div>
@@ -216,19 +215,28 @@
         var data = {
             key: "list"+n
         };
-        $.get('http://www.feifeiwd.com/api/get51news', data,
+        $.get('/api/get51news', data,
                 function(data){
                     for(var i=0;i<data.length;i++) {
                         $("#show_news ul").append(
-                                "<li><dic class='cto_pic'><a href=\""+data[i][1]+"\"><img src=\""+data[i][0]+"\"></a></dic>" +
-                                "<dic class='cto_info'><a target='_blank' href=\""+data[i][1]+"\">"+data[i][2]+"</a><p>"+
-                                data[i][3]+"</p><div class='cto_time'><i>"+data[i][4]+"</i></div></dic>"+
-                                '<div style="clear:both"></div></li>'
+                                "<li><dic class='cto_pic'><a onclick='save_url(this)' href=\""+data[i][1]+"\"><img src=\""+data[i][0]+"\"></a></dic>" +
+                                "<dic class='cto_info'><a onclick='save_url(this)' target='_blank' href=\""+data[i][1]+"\">"+data[i][2]+"</a><p>"+
+                                data[i][3]+"</p><div class='cto_time'><i>"+data[i][4]+"</i></div></dic></div></li>"
                         )
                     }
                 });
     };
-    CTO_news(n)
+    CTO_news(n);
+
+    //加载更多51 news
+    var more_news = function() {
+        n = n + 1;
+        if(n<=4){
+            CTO_news(n);
+        } else {
+            $("#show_more a").html("已到最后")
+        }
+    }
 
     </script>
 </body>

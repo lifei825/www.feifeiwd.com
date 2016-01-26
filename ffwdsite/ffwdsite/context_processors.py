@@ -9,7 +9,7 @@ def get_news(keyword):
     titlecurldate=[]
     for i in sorted(r9.lrange(keyword,start=0,end=-1),key=lambda x:eval(x)[2],reverse=True):  #以时间排序
         titlecurldate.append(eval(i))
-    return titlecurldate[:16]
+    return titlecurldate[:20]
 
 
 def auston_proc(request):
