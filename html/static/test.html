@@ -1,0 +1,50 @@
+<title>导航——点击弹出内容</title>
+<style type="text/css">
+.navgation{margin:0;padding:0;list-style-type:none;position:relative;}
+.navgation li {float:left;}
+.navgation a{padding:3px 6px;background-color:orange;color:white;text-decoration:none;float:left;height:24px;}
+.navgation a:hover {background-color:white;color:blue;text-decoration:underline;}
+.navgation div{display:none;position:absolute;top:30px;}
+</style>
+
+<script src="http://123.57.64.174/static/jquery/jquery-1.11.2.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+$(".navgation input").each(function () {
+var this_div = $(".navgation div");
+var _inx = $(".navgation input").index(this);
+$(this).click(
+function () { this_div.eq(_inx).slideToggle(); },
+function () { this_div.eq(_inx).slideToggle(); }
+   );
+});
+});
+</script>
+
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<body>
+<H1>testttttt</H1>
+<form id="form1" runat="server">
+<div>
+<ul class="navgation">
+<li><input type="button" id="button" value="链接1"/>
+<div>这里放下拉内容1</div>
+</li>
+<li><input type="button" id="button1" value="链接2"/>
+<div>这里放下拉内容2</div>
+</li>
+<li><input type="button" id="button2" value="链接3"/>
+<div>这里放下拉内容3</div>
+</li>
+<li><input type="button" id="button3" value="链接4"/>
+<div>这里放下拉内容4</div>
+</li>
+<li><input type="button" id="button4" value="链接5"/>
+<div>这里放下拉内容5</div>
+</li>
+</ul>
+</div>
+</form>
+</body>
