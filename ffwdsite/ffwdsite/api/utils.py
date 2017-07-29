@@ -5,12 +5,15 @@ import random
 import os
 import redis
 import json
+from django.conf import settings
 
 
 class ChangePicture(View):
     def get(self, request):
-        index_img = 'hz/'+random.choice(os.listdir('/usr/html/static/img/index/hz'))
+        index_img = 'hz/'+random.choice(os.listdir(settings.STATIC_ROOT + '/img/index/hz'))
+        print index_img
         return HttpResponse(index_img)
+
 
 class Get51News(View):
     def get(self, request):

@@ -2,7 +2,7 @@
 import requests
 import re
 import redis
-import sendmail
+# import sendmail
 
 
 class App(object):
@@ -30,11 +30,13 @@ class App(object):
                     date = re.findall('<div class="time">(.*)', data)[0].strip()
                     r9.rpush(self.key, (img, url, title, info, date))
         except Exception as e:
-            sendmail.send_mail(['747553934@qq.com'], "51cto_new None", "51cto news get lists = [] %s" % e)
+            print e
+ #          sendmail.send_mail(['747553934@qq.com'], "51cto_new None", "51cto news get lists = [] %s" % e)
+
 
 
 if __name__ == '__main__':
-    r9 = redis.Redis(host='127.0.0.1', port=6379, db=9, password='ffwd')
+    r9 = redis.Redis(host='127.0.0.1', port=6379, db=9)
     App("list1").get_data()
     App("list2").get_data()
     App("list3").get_data()

@@ -1,15 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% load staticfiles %}
 {% load mytags %}
 <html>
 <head>
-<script type="text/javascript" src="{{url}}/static/jquery/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="/static/jquery/jquery-1.11.2.js"></script>
 <meta name="baidu-site-verification" content="RA1O7L01fc" />
 {% block keyword %}
 <meta name="Keywords" content="python,django,linux,mysql,javascript,jquery" />
 {% endblock %}
 <meta property="wb:webmaster" content="4950cc0451605ed9" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-<link rel="stylesheet" href="{{url}}/static/css/index.css" type="text/css" />
+<link rel="stylesheet" href="/static/css/index.css" type="text/css" />
 <link rel="shortcut icon" href="/favicon.ico" />
 {% block jquery %}{% endblock%}
 <style type="text/css">
@@ -62,7 +63,7 @@
                 <div class="djangonew" style="overflow:auto;float:right;aborder:1px solid red;height:10%;width:49%;">
                 <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Python最新动态</h4>
                     {% for title,curl,date in pythonnews %}
-                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a onclick="save_url(this)" href="{{curl}}" target="_blank">{{title}}</a>  
+                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a onclick="save_url(this)" href="#" target="_blank">{{title}}</a>
                     <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
                     {% endfor %}
                 </div>
@@ -133,7 +134,7 @@
     
     <div id="center" >
     {% block center %}
-        <img id="hz_pic" style="width:100%;height:40%"  src="{{url}}/static/img/index/{{center_img}}" >
+        <img id="hz_pic" style="width:100%;height:40%"  src="/static/img/index/{{center_img}}" >
         <div class="lizhi" style="overflow:auto;width:100%;height:60%;background-color:#87CEEB;">
         <h2>励志微语</h2>
         <h2>{{inspires}}</h2>
@@ -144,12 +145,13 @@
     <div id="right" >
         <div class="ind">
             <br />
-            <a class="inda" href="/"><img src="{{url}}/static/portrait_img/111.jpg" height="60" width="60" alt="首页"></a>
+            <a class="inda" href="/"><img src="/static/portrait_img/111.jpg" height="60" width="60" alt="首页"></a>
             <br /><br />
             <ul class="ulli">
                 {% for idd,item in list1 %}
                     <!--li ><a id="select{{idd}}" href="http://www.feifeiwd.com/select/{{idd}}" atarget="_blank">{{ item }}</a-->
-                    <li ><a id="select{{idd}}" href="{{url}}/content/{{idd}}/999/" atarget="_blank">{{ item }}</a>
+                    <!--<li ><a id="select{{idd}}" href="{{url}}/content/{{idd}}/999/" atarget="_blank">{{ item }}</a>-->
+                    <li ><a id="select{{idd}}" href="/content/{{idd}}/999/" atarget="_blank">{{ item }}</a>
                 {% endfor %}
             </ul>
         </div>
@@ -165,7 +167,7 @@
     <div id="bottom"></div>
     < 底部区域-END -->
 
-<script src="{{url}}/static/js/jsized.snow.min.js" type="text/javascript"></script>
+<script src="/static/js/jsized.snow.min.js" type="text/javascript"></script>
 <script>
     /**
      * This function takes 2 arguments
@@ -200,12 +202,12 @@
                 };
 		$.post('/api/click_url', data);
 	}
-    //循环执行， 每10s 执行一次图片更新
-    window.setInterval(ChangePicture, 10000);
+    //循环执行， 每100s 执行一次图片更新
+    window.setInterval(ChangePicture, 100000);
     function ChangePicture() {
         $.get('/api/changePicture',
             function(data){
-                $("#hz_pic").attr("src", "{{url}}/static/img/index/"+data);
+                $("#hz_pic").attr("src", "/static/img/index/"+data);
             });
     }
 

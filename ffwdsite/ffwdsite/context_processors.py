@@ -1,32 +1,35 @@
-#coding=utf8
+# coding=utf8
 import time
 from redis import Redis
-from mydb.models import Blog_inspire
+# from mydb.models import Blog_inspire
+from django.conf import settings
+
+r9 = Redis(host='localhost', port=6379, db=9, password="123")
 
 
-r9=Redis(host='localhost',port=6379,db=9,password='ffwd')
 def get_news(keyword):
     titlecurldate=[]
-    for i in sorted(r9.lrange(keyword,start=0,end=-1),key=lambda x:eval(x)[2],reverse=True):  #以时间排序
+    for i in sorted(r9.lrange(keyword, start=0, end=-1), key=lambda x: eval(x)[2], reverse=True):  # 以时间排序
         titlecurldate.append(eval(i))
     return titlecurldate[:20]
 
 
 def auston_proc(request):
-    #主页随机图片
+    # 主页随机图片
     import random,os
-    index_img='hz/'+random.choice(os.listdir('/usr/html/static/img/index/hz'))
-    index_list=[('0','学习'),('1','工具'),('2','生活'),('3','标签'),('4','监控'),('5','论坛'),('6','关于')]
-    #online redis: key value 过期时间
+    index_img = 'hz/'+random.choice(os.listdir(settings.STATIC_ROOT + '/img/index/hz'))
+    index_list = [('0', '学习'), ('1', '工具'),('2', '生活'), ('3','标签'), ('4', '监控'), ('5', '论坛'), ('6','关于')]
+    # online redis: key value 过期时间
     if 'HTTP_X_REAL_IP' in request.META:
         ip=request.META['HTTP_X_REAL_IP']
     else:
         ip=request.META['REMOTE_ADDR']
-    r10=Redis(host='localhost',port=6379,db=10,password='ffwd')
+    r10=Redis(host='localhost',port=6379,db=10, password="123")
     r10.setex('IP:'+ip,request.user,60*5)
     online_ips=len(r10.keys('IP*'))
     #励志
-    inspires=Blog_inspire.objects.order_by('?')[0].inspire
+    inspires=None
+    #inspires=Blog_inspire.objects.order_by('?')[0].inspire
     #DJANGO 新闻动态  redis: key list
     django_news = get_news('Django')
     #python 新闻动态  redis: key list
@@ -39,7 +42,7 @@ def auston_proc(request):
     Go_news = get_news('Go')
     
     #今日访问
-    r12=Redis(host='localhost',port=6379,db=12,password='ffwd')
+    r12=Redis(host='localhost',port=6379,db=12, password="123")
     now=time.strftime('%Y%m%d %T') 
     refer=request.META.get('HTTP_REFERER','No REFERER')
     r12.ltrim('IP:'+ip,start=10,end=1)  #写入前先清空列表防止叠加
@@ -51,12 +54,12 @@ def auston_proc(request):
     #all public variables
     return {'list1':index_list,
             'center_img':index_img,
-            'url':"http://www.feifeiwd.com", 
-            'META':request.META,
-            'SESSION':request.session,
-            'online_ips':online_ips,
-            'User':request.user,
-            'inspires':inspires,
+            'url': "http://www.feifeiwd.com",
+            'META': request.META,
+            'SESSION': request.session,
+            'online_ips': online_ips,
+            'User': request.user,
+            'inspires': inspires,
             'djangonews':django_news,
             'pythonnews':Python_news,
             'tornadonews':Tornado_news,
