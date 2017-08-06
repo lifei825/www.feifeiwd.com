@@ -16,5 +16,6 @@ RUN apk add nginx supervisor mariadb-dev g++\
 COPY config/nginx.conf /etc/nginx/
 COPY config/*.ini /etc/supervisor.d/
 COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
