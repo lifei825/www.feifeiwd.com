@@ -9,7 +9,7 @@ from redis import Redis
 from ffwdsite.contact.forms import RegisterForm,LoginForm
 import time
 # from weibo import APIClient
-from settings import db
+from settings import db, redis_conn
 from django.contrib.auth.decorators import login_required
 import json
 
@@ -68,7 +68,8 @@ def content_if(request,titles_id,t_id,html=('select.html','content.html')):
         else:
             ip = request.META['REMOTE_ADDR']
 
-        r11 = Redis(host='localhost', port=6379, db=11, password='123')
+        # r11 = Redis(host='localhost', port=6379, db=11, password='123')
+        r11 = redis_conn(11)
         # ip不在redis对应的t_id命名集合key中(是不是今天第一次访问文章)
         if ip not in r11.smembers('essay'+t_id):
             # redis: 新增或追加一个essayid的set key，并存入一个ip，ip重复则抵消
@@ -132,9 +133,9 @@ def Content(request,type,t_id):
 # 访问状态
 @login_required(login_url="/")
 def Visit(request):
-    r10=Redis(host='localhost', port=6379, db=10, password='123')
-    r12=Redis(host='localhost', port=6379, db=12, password='123')
-    #mongo Click_url
+    r10 = redis_conn(10)
+    r12 = redis_conn(12)
+    # mongo Click_url
     today_sec = time.mktime(time.strptime(time.strftime("%Y%m%d"),"%Y%m%d"))
     curl_data = db.curl.find({'date':{'$gte':today_sec}},{'_id':0})
     curl_data = list(curl_data)
@@ -152,20 +153,23 @@ def Visit(request):
     today_ipall=sorted(today_ipallwx,key=lambda x:x[1][1],reverse=True)
     return render_to_response('plug/visit_state.html',{"curl_data":curl_data,"online_ipall":online_ipall,"today_ipall":today_ipall},RequestContext(request))
 
-#点击超链接统计
-def Click_url(request):
-	if request.method == 'POST':
-		url = request.POST.get('url')
-		IP = request.POST.get('IP')
-		db.curl.insert({'ip':IP, 'url':url, 'date':time.time()})
-	return HttpResponse("ok")
 
-#点赞
+# 点击超链接统计
+def Click_url(request):
+    if request.method == 'POST':
+        url = request.POST.get('url')
+        IP = request.POST.get('IP')
+        db.curl.insert({'ip':IP, 'url':url, 'date':time.time()})
+        return HttpResponse("ok")
+
+
+# 点赞
 def Click_praise(request):
-	if request.method == 'POST':
-		ID = request.POST.get('essayID')
-        	essay_id=Blog_essay.objects.get(id=ID)
-            	essay_id.praise+=1
-            	essay_id.save()
-	return HttpResponse(json.dumps({'praise':essay_id.praise}),content_type = 'application/json')
-		
+    if request.method == 'POST':
+        ID = request.POST.get('essayID')
+        essay_id=Blog_essay.objects.get(id=ID)
+        essay_id.praise+=1
+        essay_id.save()
+
+    return HttpResponse(json.dumps({'praise': essay_id.praise}),content_type = 'application/json')
+

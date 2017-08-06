@@ -2,13 +2,13 @@
 import requests
 import re
 import redis
-# from ffwdsite.ffwdsite.settings import redis_conn
+from ffwdsite.ffwdsite.settings import redis_conn
 # import sendmail
 
 
 class App(object):
-    # r9 = redis_conn(db=9)
-    r9 = redis.Redis(host='127.0.0.1', port=6379, db=9, password='123')
+    r9 = redis_conn(db=9)
+    # r9 = redis.Redis(host='127.0.0.1', port=6379, db=9, password='123')
 
     def __init__(self, key):
         self.key = key
