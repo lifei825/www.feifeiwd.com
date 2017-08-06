@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c9519be-0a8c-42bc-95bf-aa5e87d48bbf" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docker-compose.deploy.yaml" afterPath="$PROJECT_DIR$/docker-compose.deploy.yaml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dockerfile" afterPath="$PROJECT_DIR$/Dockerfile" />
     </list>
     <ignored path="www.feifeiwd.com.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1122,11 +1122,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Dockerfile">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
-              <caret line="11" column="3" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+              <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -1162,7 +1162,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="docker-compose.deploy.yaml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="docker-compose.deploy.yaml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docker-compose.deploy.yaml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="435">
@@ -1258,7 +1258,6 @@
         <option value="$PROJECT_DIR$/config/supervior_celery.ini" />
         <option value="$PROJECT_DIR$/docker-entrypoint.sh" />
         <option value="$PROJECT_DIR$/config/supervisor_ffwd.ini" />
-        <option value="$PROJECT_DIR$/Dockerfile" />
         <option value="$PROJECT_DIR$/ffwdsite/temp/news.html" />
         <option value="$PROJECT_DIR$/ffwdsite/temp/content.html" />
         <option value="$PROJECT_DIR$/ffwdsite/temp/select.html" />
@@ -1266,6 +1265,7 @@
         <option value="$PROJECT_DIR$/ffwdsite/ffwdsite/settings.py" />
         <option value="$PROJECT_DIR$/tasks/celery_task.py" />
         <option value="$PROJECT_DIR$/docker-compose.deploy.yaml" />
+        <option value="$PROJECT_DIR$/Dockerfile" />
       </list>
     </option>
   </component>
@@ -2087,14 +2087,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="3" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/nginx.conf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -2157,6 +2149,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
           <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
           <folding />
         </state>
       </provider>

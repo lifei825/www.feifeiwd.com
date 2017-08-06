@@ -9,7 +9,7 @@ RUN apk update && apk add ca-certificates && \
 COPY . /home/django
 
 RUN apk add nginx && apk add supervisor && mkdir /etc/supervisor.d && mkdir -p /home/django && \
-    pip install -r requirements.txt
+    pip install -r /home/django/requirements.txt
 
 # RUN echo_supervisord_conf > /etc/supervisord.conf
 
