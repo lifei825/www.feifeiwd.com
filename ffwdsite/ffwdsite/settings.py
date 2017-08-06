@@ -20,7 +20,8 @@ MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "ffdata")
 
 
 def redis_conn(db=1):
-    r = Redis(host=REDIS_HOST, port=6379, db=db, password="123")
+    # r = Redis(host=REDIS_HOST, port=6379, db=db, password="123)
+    r = Redis(host=REDIS_HOST, port=6379, db=db)
 
     return r
 
