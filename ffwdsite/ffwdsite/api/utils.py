@@ -6,6 +6,7 @@ import os
 import redis
 import json
 from django.conf import settings
+from ffwdsite.settings import redis_conn
 
 
 class ChangePicture(View):
@@ -17,7 +18,8 @@ class ChangePicture(View):
 
 class Get51News(View):
     def get(self, request):
-        r9 = redis.Redis(host='127.0.0.1', port=6379, db=9, password='ffwd')
+        # r9 = redis.Redis(host='127.0.0.1', port=6379, db=9, password='ffwd')
+        r9 = redis_conn(db=9)
         key = request.GET.get('key')
         data = r9.lrange(key, 0, -1)
         lists = [eval(d) for d in data]

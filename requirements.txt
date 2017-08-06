@@ -6,3 +6,4 @@ requests
 django==1.7.2
 mysqlclient
 pillow
+celery

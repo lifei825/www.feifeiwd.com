@@ -65,8 +65,8 @@
         <pre>{{content.content|code|safe}}</pre>
             <hr style="margin-top:50px;margin-bottom:20px" >
             <!-- 登录 注册  评论  -->
-                <link rel="stylesheet" href="{{url}}/static/css/register.css" type="text/css" />
-                <script type="text/javascript" src="http://www.feifeiwd.com/static/js/register.js"></script>
+                <link rel="stylesheet" href="/static/css/register.css" type="text/css" />
+                <script type="text/javascript" src="/static/js/register.js"></script>
                 <!-- 弹窗时锁背景 默认隐藏-->
                 <div id="back" style="display:none"></div>
                 <!-- DIV登录框 默认隐藏-->
@@ -100,7 +100,7 @@
                 <!-- 判断是否登录状态 主评论框-->
                     {% if User.is_authenticated and User.is_active %}
                         <p>Hello.{{User}}!
-                        <input type="button" value="登出"  onclick="window.location.href='http://www.feifeiwd.com/logout/'" />
+                        <input type="button" value="登出"  onclick="window.location.href='/logout/'" />
                         <form action="/comment/" method='post'>
                             {% csrf_token %}
                             <p><textarea name='message' rows="6" cols="35">请文明留言</textarea>
@@ -181,7 +181,7 @@
                 <li><a href="#" class="click1_{{essay_tag.id}}" onclick="chg(this);" ><h3 style="float:left" >{{essay_tag.tag_name}}</h3>({{essay_title|length}})</a>
                     <ul  style="display: none;" class="submenu{{essay_tag.id}}">
                         {% for tag_titles in essay_title %}
-                            <li style="line-height:40px;background-color:#B0E0E6;"><a href="{{url}}/content/{{type_id}}/{{tag_titles.id}}">&nbsp{{tag_titles.title}}</a>
+                            <li style="line-height:40px;background-color:#B0E0E6;"><a href="/content/{{type_id}}/{{tag_titles.id}}">&nbsp{{tag_titles.title}}</a>
                         {% endfor %}
                     </ul>
             {% endfor %}
@@ -192,7 +192,7 @@
         <div class="title_list">
         <ul>
         {% for essay_title in titles %}
-            <li><a href="{{url}}/content/{{type_id}}/{{essay_title.id}}">&nbsp{{essay_title.title}}</a>
+            <li><a href="/content/{{type_id}}/{{essay_title.id}}">&nbsp{{essay_title.title}}</a>
         {% endfor %}
         </ul>
         </div>
