@@ -8,7 +8,7 @@ RUN apk update && apk add ca-certificates tzdata && \
 COPY . /home/django
 
 RUN apk add nginx supervisor mariadb-dev g++ python-dev \
-    && mkdir /etc/supervisor.d && mkdir -p /home/django && mkdir /run/nginx \
+    && mkdir /etc/supervisor.d && mkdir -p /home/django && mkdir /run/nginx && \
     pip install -r /home/django/requirements.txt
 
 # RUN echo_supervisord_conf > /etc/supervisord.conf
