@@ -8,7 +8,7 @@ services:
       - redis
       - mysql
     ports:
-      - "80:80"
+      - "7788:80"
     environment:
       REDIS_HOST: "redis"
       MONGO_URL: "mongodb://mongo:27017"

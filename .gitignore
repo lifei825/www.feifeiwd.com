@@ -6,4 +6,4 @@
 dist
 build
 ffwdsite/uws.error
-ffwdsite/ffwdsite/settings.py
+# ffwdsite/ffwdsite/settings.py
