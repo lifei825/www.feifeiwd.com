@@ -1,8 +1,11 @@
 # coding:utf-8
 import requests
 import re
-import redis
-from ffwdsite.ffwdsite.settings import redis_conn
+import os
+import sys
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.join(BASE_DIR, 'ffwdsite'))
+from ffwdsite.settings import redis_conn
 # import sendmail
 
 

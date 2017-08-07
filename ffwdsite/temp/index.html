@@ -63,7 +63,7 @@
                 <div class="djangonew" style="overflow:auto;float:right;aborder:1px solid red;height:10%;width:49%;">
                 <h4 style="color:#A52A2A2;background:#00CED1; text-align:center;">Python最新动态</h4>
                     {% for title,curl,date in pythonnews %}
-                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a onclick="save_url(this)" href="#" target="_blank">{{title}}</a>
+                    <p style="font-size:14px;color:black;border-bottom:1px solid #DCDCDC;margin:17px;"><a onclick="save_url(this)" href="{{curl}}" target="_blank">{{title}}</a>
                     <span style="color:#A9A9A9;font-size:7px"> {{date}}</span>
                     {% endfor %}
                 </div>

@@ -3,8 +3,11 @@
 import re
 import time
 import requests
-from ffwdsite.ffwdsite.settings import redis_conn
-# r9=redis.Redis(host='localhost',port=6379,db=9,password='ffwd')
+import os
+import sys
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.join(BASE_DIR, 'ffwdsite'))
+from ffwdsite.settings import redis_conn
 Url = "https://www.oschina.net/search?q=django&scope=news&days=0&sort_by_time=1"
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:42.0) Gecko/20100101 Firefox/42.0',
            'Accept': 'text/html;q=0.9,*/*;q=0.8',

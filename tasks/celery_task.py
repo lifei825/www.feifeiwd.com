@@ -2,7 +2,9 @@ from celery import Celery, platforms
 from datetime import timedelta
 from script.django_news import djnew, Url, headers
 from script.wycto_news import App
-app = Celery('ffwd', broker='redis://:123@127.0.0.1:6379/10')
+from ffwdsite.settings import REDIS_HOST
+# app = Celery('ffwd', broker='redis://:123@127.0.0.1:6379/10')
+app = Celery('ffwd', broker='redis://%s:6379/10' % REDIS_HOST)
 
 app.conf.update({
     'CELERY_TASK_SERIALIZER': 'json',
