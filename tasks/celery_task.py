@@ -1,5 +1,7 @@
 from celery import Celery, platforms
 from datetime import timedelta
+# import sys
+# sys.path.append("/home/django")
 from script.django_news import djnew, Url, headers
 from script.wycto_news import App
 from ffwdsite.ffwdsite.settings import REDIS_HOST
@@ -61,3 +63,5 @@ def get_new(self):
     go_new=djnew(Url6,headers,'Go')
     go_new.toredis()
 
+if __name__ == '__main__':
+    get_new()

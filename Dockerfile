@@ -1,3 +1,4 @@
+# docker build -t ffwd/blog:latest .
 FROM python:2.7.13-alpine
 MAINTAINER lifei5 "lifei5@asiainfo.com"
 
