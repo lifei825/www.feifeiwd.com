@@ -39,15 +39,19 @@ class djnew(object):
         weblist = []
         n = 0
         for i in getlist:
-            url,title=i[0],i[1]
-            weblist.append((url,title,newdate[n]));n+=1
+            url, title = i[0], i[1]
+            weblist.append((url, title, newdate[n]))
+            n += 1
         return weblist
 
     def toredis(self):
-        self.r9.delete(self.keyword)
-        for url,tit,nd in self.getnew():
-            self.r9.rpush(self.keyword,(tit,url,nd))
-        #for i in sorted(r9.keys(),key=lambda x:r9.lindex(x,1),reverse=True):
+        getnews = self.getweb()
+        if getnews:
+            self.r9.delete(self.keyword)
+
+        for url, tit, nd in getnews:
+            self.r9.rpush(self.keyword, (tit, url, nd))
+        # for i in sorted(r9.keys(),key=lambda x:r9.lindex(x,1),reverse=True):
         #    print i,r9.lindex(i,0),r9.lindex(i,1)
 
 

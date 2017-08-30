@@ -1,7 +1,7 @@
 from celery import Celery, platforms
 from datetime import timedelta
-# import sys
-# sys.path.append("/home/django")
+import sys
+sys.path.append("/home/django")
 from script.django_news import djnew, Url, headers
 from script.wycto_news import App
 from ffwdsite.ffwdsite.settings import REDIS_HOST
@@ -13,8 +13,8 @@ app.conf.update({
     "CELERYBEAT_SCHEDULE": {
         'add-every-15-minutes': {
             'task': 'tasks.celery_task.get_new',
-            'schedule': timedelta(seconds=15),
-            # 'schedule': timedelta(hours=6),
+            # 'schedule': timedelta(seconds=15),
+            'schedule': timedelta(hours=6),
         },
     }
 })
