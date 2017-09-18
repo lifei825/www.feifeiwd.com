@@ -108,7 +108,7 @@ def Content(request,type,t_id):
         content, go_html = content_if(request, titles_id, t_id)
     # 监控
     elif type == "4":
-        return HttpResponseRedirect('http://devops.feifeiwd.com/login')
+        return HttpResponseRedirect('http://devops.feifeiwd.com:8080')
         # return render_to_response('creating.html',RequestContext(request))
     # 论坛
     elif type == "5":

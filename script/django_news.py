@@ -45,7 +45,7 @@ class djnew(object):
         return weblist
 
     def toredis(self):
-        getnews = self.getweb()
+        getnews = self.getnew()
         if getnews:
             self.r9.delete(self.keyword)
 
