@@ -38,7 +38,7 @@ def auston_proc(request):
     django_news = get_news('Django')
     # python 新闻动态  redis: key list
     Python_news = get_news('Python')
-    print(Python_news)
+    # print(Python_news)
     # tornado 新闻动态  redis: key list
     Tornado_news = get_news('Tornado')
     Flask_news = get_news('Flask')

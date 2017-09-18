@@ -28,3 +28,14 @@ services:
       MYSQL_DATABASE: "ffdata"
     volumes:
       - /data/mysql:/var/lib/mysql
+
+  devops:
+    image: devops:latest
+    depends_on:
+      - redis
+      - mysql
+    ports:
+      - "8080:80"
+    environment:
+      FLASK_CONFIG: "DevopsProduction"
+
